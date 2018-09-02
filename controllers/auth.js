@@ -1,44 +1,46 @@
-var express = require('express');
-var app = express();
-var router = express.Router();
-var User = require('../models/user.js');
-var mongoose = require("mongoose");
+var express               = require('express');
+var User                  = require('../models/user.js');
+var mongoose              = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
-var passport      = require('passport');
+var passport              = require('passport');
+var bodyParser            = require("body-parser");
 
-router.get("/",function(req,res){
-  res.render("index.ejs");
-});
+
+var router = express.Router();
+router.use(bodyParser.urlencoded({extended: true}));
 
 //Login controller
 router.post("/login", function(req, res){
 
 });
 
-//Sign Up controlelr
+//index page
+router.get("/",function(req,res){
+  res.render("index.ejs");
+});
+
+//register controller
 router.post("/register", function(req, res){
-  console.log(req.body);
+    //create new user from request's form
     var newUser = new User({email     : req.body.email,
-                            firstname : req.body.firstname,
-                            lastname  : req.body.lastname
+                            firstname : req.body.firstname
     });
-    console.log("user made");
-    //TODO check if email already exists
+
+    //register new user to users collection
     User.register(newUser, req.body.password, function(err, user){
         if(err){
-            console.log("ERRRO");
+            console.log(err);
             return res.render("index.ejs", {error: "Register Failed"});
         }
         else{
+          //log in the new user
           passport.authenticate("local")(req, res, function(){
-            console.log("mphke sto pssport auth");
-            res.redirect("/");
+            res.send("Account created successfully! You are now logged in.");
           });
         }
     });
 
-    console.log("after register");
+    console.log("registration complete");
 });
-
 
 module.exports = router;
