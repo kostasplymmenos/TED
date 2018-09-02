@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>ConnectedIn Social Network</title>
+    <!-- Cant include bootstrap locally ??? -->
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js">
+  </head>
+  <body style="background-color:#417d9a">
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="/">
+        <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt=""><span style="margin:0;padding:0">onnectedIn</span>
+      </a>
+      <div class="nav">
+
+      </div>
+      <form class="form-inline" action="/login" method="post">
+        <input class="form-control mr-sm-2" type="email" placeholder="Your Email">
+        <input class="form-control mr-sm-2" type="password" placeholder="Your Password">
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Login</button>
+      </form>
+    </nav>
+
+    <div style="color:white; margin:10px auto; text-align:center">
+      <h3>Welcome to the world's largest professional social network</h3>
+      <p>Register now to our Professional World.</p>
+      <p>Find your Friends and Colleuages. Build your Network and Advance your Career.</p>
+    </div>
+
+    <div style="background-color:#4b8fb0">
+      <div class="row">
+        <div class="col-lg-8">
+          <img style="max-width:100%; max-height:100%" src="back_new.jpg">
+        </div>
+
+        <!-- Sign up form -->
+        <div style="margin:10px;color:white" class="col-lg-3 form-group">
+          <h3>Register Now!</h3>
+            <form action="/register" method="post">
+              <label for="emailLabel">Email address</label>
+              <input class="form-control" id="emailLabel" type="text" name="email" value="" required> <br>
+              <label for="pswdLabel">Password</label>
+              <input class="form-control" id="pswdLabel" type="password" name="password" value="" required> <br>
+              <label for="pswd2Label">Confirm Password</label>
+              <input class="form-control" id="pswd2Label" type="password" name="passwordCheck" value="" required> <br>
+              <label for="bdayLabel">Birth Date</label>
+              <input class="form-control" id="bdayLabel" type="date" name="date" value="" required> <br>
+              <label for="fnameLabel">First Name</label>
+              <input class="form-control" id="fnameLabel" type="text" name="firstname" value="" required> <br>
+              <label for="lnameLabel">Last Name</label>
+              <input class="form-control" id="lnameLabel" type="text" name="lastname" value="" required> <br>
+              <label for="picLabel">Profile Picture</label>
+              <input id="picLabel" type="file" name="pic" accept="image/*"> <br>
+              <input type="submit" value="Sign Up!">
+            </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+<footer class="page-footer font-small pt-4" style="background-color:white">
+
+    <!-- Footer Links -->
+    <div class="container-fluid text-center text-md-left">
+
+      <!-- Grid row -->
+      <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-md-6 mt-md-0 mt-3">
+
+          <!-- Content -->
+          <h5 class="text-uppercase">Footer Content</h5>
+          <p>Here you can use rows and columns here to organize your footer content.</p>
+
+        </div>
+        <!-- Grid column -->
+
+        <hr class="clearfix w-100 d-md-none pb-3">
+
+        <!-- Grid column -->
+        <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5 class="text-uppercase">Links</h5>
+
+            <ul class="list-unstyled">
+              <li>
+                <a href="#!">Link 1</a>
+              </li>
+              <li>
+                <a href="#!">Link 2</a>
+              </li>
+              <li>
+                <a href="#!">Link 3</a>
+              </li>
+              <li>
+                <a href="#!">Link 4</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 mb-md-0 mb-3">
+
+            <!-- Links -->
+            <h5 class="text-uppercase">Links</h5>
+
+            <ul class="list-unstyled">
+              <li>
+                <a href="#!">Link 1</a>
+              </li>
+              <li>
+                <a href="#!">Link 2</a>
+              </li>
+              <li>
+                <a href="#!">Link 3</a>
+              </li>
+              <li>
+                <a href="#!">Link 4</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+    </div>
+    <!-- Footer Links -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2018 Copyright:
+      <a href="https://mdbootstrap.com/bootstrap-tutorial/"> MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
+
+  </body>
+</html>
