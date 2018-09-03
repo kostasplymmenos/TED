@@ -10,16 +10,16 @@ router.use(bodyParser.urlencoded({extended: true}));
 
 router.get("/network/:id",middleware.isLoggedIn,function(req,res){
   var netUsers;
-  User.find({},function(err,netUserFound){
-    netUsers = netUserFound;
-  });
-  console.log(netUsers);
   User.find({_id:req.params.id}, function(err,foundUser){
-    if(err){
-       console.log(err);
-    } else {
-       res.render("network.ejs",{user: foundUser[0],networkUsers: netUsers});
-    }
+    User.find({},function(err,netUserFound){
+      netUsers = netUserFound;
+      if(err){
+         console.log(err);
+      } else {
+         res.render("network.ejs",{user: foundUser[0],networkUsers: netUsers});
+      }
+    });
+
   });
 });
 
