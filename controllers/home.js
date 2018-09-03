@@ -1,8 +1,21 @@
 var express = require('express');
 var app = express();
 var router = express.Router();
+var bodyParser = require("body-parser");
+var mongoose = require("mongoose");
+var User = require('./../models/user.js');
+var middleware = require("./../helpers/auth_middleware.js");
 
+router.use(bodyParser.urlencoded({extended: true}));
 
-router.get("/home/:id",function(req,res){
-  res.render("home.ejs");
+router.get("/home/:id",middleware.isLoggedIn,function(req,res){
+  User.find({_id:req.params.id}, function(err,foundUser){
+    if(err){
+       console.log(err);
+    } else {
+       res.render("home.ejs",{user: foundUser[0]});
+    }
+  });
 });
+
+module.exports = router;

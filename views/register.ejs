@@ -12,36 +12,41 @@
       <a class="navbar-brand" href="/">
         <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt=""><span style="margin:0;padding:0">onnectedIn</span>
       </a>
-      <p></p>
 
-      <form action="/login" method="post" class="form-inline">
-        <input name="username" class="form-control mr-sm-2" type="email" placeholder="Your Email">
-        <input name="password" class="form-control mr-sm-2" type="password" placeholder="Your Password">
-        <button class="btn btn-outline-primary my-2 my-sm-0" name="loginbtn" type="submit">Login</button>
+      <form class="form-inline" action="/login" method="post">
+        <input class="form-control mr-sm-2" type="email" placeholder="Your Email">
+        <input class="form-control mr-sm-2" type="password" placeholder="Your Password">
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Login</button>
       </form>
-
-      <p style="color:red"> <%= error %></p>
-
       <a href="/register">
         <button class="btn btn-default btn-outline-primary"type="button" name="signup">Sign up</button>
       </a>
     </nav>
 
 
-    <div style="color:white; margin:10px auto; text-align:center">
-      <h3>Welcome to the world's largest professional social network</h3>
-      <p>Register now to our Professional World.</p>
-      <p>Find your Friends and Colleuages. Build your Network and Advance your Career.</p>
+
+    <!-- Sign up form -->
+    <div style="margin:10px auto 10px;color:white" class="col-lg-3 form-group">
+      <h3>Register Now!</h3>
+        <form action="/register" method="post">
+          <label for="emailLabel">Email address</label>
+          <input class="form-control" id="emailLabel" type="email" name="username" value="" required> <br>
+          <label for="pswdLabel">Password</label>
+          <input class="form-control" id="pswdLabel" type="password" name="password" value="" required> <br>
+          <label for="pswd2Label">Confirm Password</label>
+          <input class="form-control" id="pswd2Label" type="password" name="passwordCheck" value="" required> <br>
+          <label for="bdayLabel">Birth Date</label>
+          <input class="form-control" id="bdayLabel" type="date" name="date" value="" required> <br>
+          <label for="fnameLabel">First Name</label>
+          <input class="form-control" id="fnameLabel" type="text" name="firstname" value="" required> <br>
+          <label for="lnameLabel">Last Name</label>
+          <input class="form-control" id="lnameLabel" type="text" name="lastname" value="" required> <br>
+          <label for="picLabel">Profile Picture</label>
+          <input id="picLabel" type="file" name="pic" accept="image/*"> <br>
+          <input type="submit" value="Sign Up!">
+        </form>
     </div>
 
-    <div style="background-color:#4b8fb0">
-      <div class="row">
-        <div style="margin: 0 auto 0 auto" class="col-lg-12">
-          <img style="max-width:100%; max-height:100%" src="back_new.jpg">
-        </div>
-
-
-    </div>
 
     <!-- Footer -->
 <footer class="page-footer font-small pt-4" style="background-color:white">
