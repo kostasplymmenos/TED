@@ -16,6 +16,7 @@ var app = express();
 
 var authController = require("./controllers/auth.js");
 var homeController = require("./controllers/home.js");
+var networkController = require("./controllers/network.js");
 
 //connect to db
 //useNewUrlParser: true to prevent warnings or sth
@@ -46,8 +47,14 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(function(req, res, next){
+   res.locals.currentUser = req.user;
+   next();
+});
+
 app.use(authController);
 app.use(homeController);
+app.use(networkController);
 
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
