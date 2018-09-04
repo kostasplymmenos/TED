@@ -8,12 +8,14 @@ var middleware = require("./../helpers/auth_middleware.js");
 
 router.use(bodyParser.urlencoded({extended: true}));
 
-router.get("/home/:id",middleware.isLoggedIn,middleware.userAccess,function(req,res){
-    User.find({_id:req.params.id}, function(err,foundUser){
+router.get("/admin/:id",middleware.isLoggedIn,middleware.userAccess,function(req,res){
+    var netUsers;
+    User.find({_id: { "$ne": req.session.Auth._id }},function(err,netUserFound){
+      netUsers = netUserFound;
       if(err){
          console.log(err);
       } else {
-         res.render("home.ejs",{user: foundUser[0]});
+         res.render("admin_home.ejs",{user: req.session.Auth, networkUsers: netUsers});
       }
     });
 });

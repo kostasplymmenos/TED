@@ -1,0 +1,21 @@
+<% include partials/header.ejs %>
+
+<h1>YOU ARE THE ADMIN</h1>
+
+<% networkUsers.forEach(function(nuser){ %>
+  <div class="col-sm-4">
+
+    <!-- <a href="/profile/<%= nuser._id %>" style="text-align:center"> -->
+      <img src="/default_profile.jpg" alt="" style="margin:0 auto;display:block">
+      <p><%=nuser.firstname %> <%=nuser.lastname %></p>
+    <!-- </a> -->
+    <div class="" style="display:block;text-align:center">
+        <p><%=nuser.email %></p>
+        <p>Education</p>
+        <p>Work Experience</p>
+    </div>
+
+
+  </div>
+<% }); %>
+<% include partials/footer.ejs %>

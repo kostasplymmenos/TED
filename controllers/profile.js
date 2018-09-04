@@ -8,14 +8,17 @@ var middleware = require("./../helpers/auth_middleware.js");
 
 router.use(bodyParser.urlencoded({extended: true}));
 
-router.get("/home/:id",middleware.isLoggedIn,middleware.userAccess,function(req,res){
-    User.find({_id:req.params.id}, function(err,foundUser){
+router.get("/profile/:id",middleware.isLoggedIn,function(req,res){
+
+  User.find({_id:req.params.id}, function(err,foundUser){
+
       if(err){
          console.log(err);
       } else {
-         res.render("home.ejs",{user: foundUser[0]});
+         res.render("profile.ejs",{user: req.session.Auth, showUser: foundUser[0]});
       }
-    });
+
+  });
 });
 
 module.exports = router;

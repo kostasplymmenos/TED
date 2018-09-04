@@ -1,0 +1,21 @@
+<% include partials/header.ejs %>
+
+    <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f3f3f3;box-shadow: 1px 1px 1px black;border: 1px solid">
+      <div class="container">
+        <div class="row" style="margin:15px">
+            <ul>
+          <% freqUsers.forEach(function(freq){ %>
+            <li>
+              <p>  <%= freq.firstname %> <%= freq.lastname %></p>
+
+            </li>
+            <button class="bt btn-default btn-outline-primary" type="button" name="button">Accept</button>
+            <button class="bt btn-default btn-outline-primary" type="button" name="button">Decline</button>
+          <% }); %>
+          </ul>
+        </div>
+        </div>
+
+      </div>
+
+<% include partials/footer.ejs %>

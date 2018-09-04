@@ -1,0 +1,11 @@
+<% include partials/header.ejs %>
+
+  <div class="col-lg-6" style="background-color:#f3f3f3; margin: 0px auto">
+    <div class="container">
+      <img src="<%=showUser.image%>" alt="">
+    </div>
+    <p><%= showUser.firstname %> <%= showUser.lastname %></p>
+    <p><%= showUser.email %></p>
+  </div>
+
+<% include partials/footer.ejs %>

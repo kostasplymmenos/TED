@@ -11,7 +11,7 @@ var router = express.Router();
 //Login controller
 
 router.post('/login', function(req, res, next) {
-  console.log(req.body);
+
   passport.authenticate("local", function(err, user, info) {
     if (err) { return next(err) }
     if (!user) {
@@ -22,6 +22,11 @@ router.post('/login', function(req, res, next) {
     }
     req.logIn(user, function(err) {
       if (err) { return next(err); }
+      req.session.Auth = user;
+      if(user.isAdmin){
+        return res.redirect('/admin/' + user._id);
+      }
+      console.log(req.session.Auth);
       return res.redirect('/home/' + user._id);
     });
   })(req, res, next);
@@ -59,6 +64,7 @@ router.post("/register", function(req, res){
         else{
           //log in the new user
           passport.authenticate("local")(req, res, function(){
+            req.session.Auth = user;
             res.redirect("home/" + user._id);
           });
         }

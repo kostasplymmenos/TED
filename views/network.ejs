@@ -1,91 +1,76 @@
 <% include partials/header.ejs %>
 
-<div class="row" style="margin:30px">
-  <div class="col-lg-2" style="background-color:#f3f3f3">
-    <div class="container" style="margin:20px auto;background-color: white" >
-      <p><%= user.firstname %> <%= user.lastname %></p>
-    </div>
-    <div class="container" style="margin:20px auto;background-color:white" >
-      <p><%= user.email%></p>
-    </div>
-    <div class="container" style="margin:20px auto;background-color:white" >
-      <p>Personal Details</p>
-    </div>
-    <div class="container" style="margin:20px auto;background-color:white" >
-      <p>Personal Details</p>
-    </div>
 
-  </div>
-  <div class="col-lg-1">
+    <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f3f3f3;box-shadow: 1px 1px 1px black;border: 1px solid">
+      <div class="container">
+        <h4>Connected Users</h4>
+        <div class="row" style="margin:15px">
 
-  </div>
-  <div class="col-lg-6" style="background-color:#f3f3f3">
-    <div class="container">
-      <div class="row" style="margin:15px">
-        <% networkUsers.forEach(function(nuser){ %>
-          <div class="col-sm-4">
-            <img src="/default_profile.jpg" alt="">
-            <p><%=nuser.firstname %> <%=nuser.lastname %></p>
-            <button class="btn btn-primary"type="button" name="add">Add Friend</button>
+          <% networkUsers.forEach(function(nuser){ %>
+            <div class="col-sm-4">
+
+              <a href="/profile/<%= nuser._id %>" style="text-align:center">
+                <img src="/default_profile.jpg" alt="" style="margin:0 auto;display:block">
+                <p><%=nuser.firstname %> <%=nuser.lastname %></p>
+              </a>
+              <div class="" style="display:block;text-align:center">
+                  <p><%=nuser.email %></p>
+                  <p>Education</p>
+                  <p>Work Experience</p>
+              </div>
+
+
+            </div>
+          <% }); %>
+        </div>
+        </div>
+
+      </div>
+
+
+      <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f3f3f3;box-shadow: 1px 1px 1px black;border: 1px solid">
+        <div class="container">
+          <div class="" style="text-align:center">
+              <h4>Recommended Users</h4><br>
+              <form class="" action="#" method="get">
+                <input type="text" name="" value="" placeholder="Search by name, company, education etc.">
+                <button class="btn btn-default btn-outline-primary"type="submit" name="button">Search</button>
+              </form>
           </div>
-        <% }); %>
-      </div>
-      </div>
-    <!-- <div class="container">
-      <div class="row" style="margin:15px">
-        <div class="col-sm-4" style="border:4px solid #000">
-          <img src="/default_profile.jpg" alt="">
-          One of three columns
-          <button class="btn btn-primary"type="button" name="add">Add Friend</button>
-        </div>
-        <div class="col-sm-4" style="border:4px solid #000">
-          <img src="/default_profile.jpg" alt="">
-          One of three columns
-          <button class="btn btn-primary"type="button" name="add">Add Friend</button>
-        </div>
-        <div class="col-sm-4" style="border:4px solid #000">
-          <img src="/default_profile.jpg" alt="">
-          One of three columns
-          <button class="btn btn-primary"type="button" name="add">Add Friend</button>
-        </div>
-      </div>
-      <div class="row" style="margin:15px">
-        <div class="col-sm-4" style="border:4px solid #000">
-          <img src="/default_profile.jpg" alt="">
-          One of three columns
-          <button class="btn btn-primary"type="button" name="add">Add Friend</button>
-        </div>
-        <div class="col-sm-4" style="border:4px solid #000">
-          <img src="/default_profile.jpg" alt="">
-          One of three columns
-          <button class="btn btn-primary"type="button" name="add">Add Friend</button>
-        </div>
-        <div class="col-sm-4" style="border:4px solid #000">
-          <img src="/default_profile.jpg" alt="">
-          <p></p>
-          <button class="btn btn-primary"type="button" name="add">Add Friend</button>
-        </div>
-      </div>
-      <div class="row" style="margin:15px">
-        <div class="col-sm-4" style="border:4px solid #000">
-          <img src="/default_profile.jpg" alt="">
-          One of three columns
-          <button class="btn btn-primary"type="button" name="add">Add Friend</button>
-        </div>
-        <div class="col-sm-4" style="border:4px solid #000">
-          <img src="/default_profile.jpg" alt="">
-          One of three columns
-          <button class="btn btn-primary"type="button" name="add">Add Friend</button>
-        </div>
-        <div class="col-sm-4" style="border:4px solid #000">
-          <img src="/default_profile.jpg" alt="">
-          One of three columns
-          <button class="btn btn-primary"type="button" name="add">Add Friend</button>
-        </div>
-      </div> -->
-    </div>
-  </div>
 
-</div>
+
+          <div class="row" style="margin:15px">
+            <% networkUsers.forEach(function(nuser){ %>
+              <div class="col-sm-4">
+
+                <a href="/profile/<%= nuser._id %>" style="text-align:center">
+                  <img src="/default_profile.jpg" alt="" style="margin:0 auto;display:block">
+                  <p><%=nuser.firstname %> <%=nuser.lastname %></p>
+                </a>
+                <div class="" style="display:block;text-align:center">
+                    <p><%=nuser.email %></p>
+                    <p>Education</p>
+                    <p>Work Experience</p>
+                    <form action="/network/<%=user._id%>/new/<%=nuser._id%>" method="post">
+                      <button id="Add" class="btn btn-default btn-outline-primary" type="submit" name="button">Add to Network</button>
+                    </form>
+
+                </div>
+
+              </div>
+            <% }); %>
+          </div>
+          </div>
+
+        </div>
+
+        <!-- <script type="text/javascript">
+
+          document.getElementById("Add<%=nuser._id%>").onclick = function() {
+            this.disabled = true;
+            this.text = "Request Sent";
+          }
+        </script> -->
+
 
 <% include partials/footer.ejs %>
