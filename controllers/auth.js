@@ -7,16 +7,12 @@ var bodyParser            = require("body-parser");
 
 var router = express.Router();
 
-
-//Login controller
-
+//login controller
 router.post('/login', function(req, res, next) {
-
   passport.authenticate("local", function(err, user, info) {
     if (err) { return next(err) }
     if (!user) {
       console.log("NOOO.body");
-      // *** Display message without using flash option
       // re-render the login form with a message
       return res.render('index.ejs', { error: info.message })
     }
@@ -32,22 +28,23 @@ router.post('/login', function(req, res, next) {
   })(req, res, next);
 });
 
+//logout controller
 router.get("/logout", function(req, res){
   req.logout();
   res.redirect("/");
 });
 
-//index page
+//index controller
 router.get("/",function(req,res){
   res.render("index.ejs",{error:""});
 });
 
-//register page
+//register controller (get)
 router.get("/register",function(req,res){
   res.render("register.ejs");
 });
 
-//register controller
+//register controller (post)
 router.post("/register", function(req, res){
     //create new user from request's form
     var newUser = new User({email     : req.body.username,
@@ -56,7 +53,7 @@ router.post("/register", function(req, res){
                             birthdate : req.body.birthdate
     });
 
-    //register new user to users collection
+    //register new user to users collection (via mongoose)
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             return res.render("index.ejs", {error: "Register Failed"});
@@ -65,12 +62,13 @@ router.post("/register", function(req, res){
           //log in the new user
           passport.authenticate("local")(req, res, function(){
             req.session.Auth = user;
+            //redirect to logged user's home page
             res.redirect("home/" + user._id);
           });
         }
     });
-
-    console.log("registration complete");
+    //if this point is reached, registration was sucessful
+    console.log("A registration was completed successfully.");
 });
 
 module.exports = router;

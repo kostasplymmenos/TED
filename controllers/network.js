@@ -10,15 +10,17 @@ router.use(bodyParser.urlencoded({extended: true}));
 
 router.get("/network/:id",middleware.isLoggedIn,middleware.userAccess,function(req,res){
     var netUsers;
-    //User.find( {"$and": [ {_id:{"$ne": req.session.Auth._id}}, {_id:{"$ne": req.session.Auth.friendRequests}} ] },function(err,netUserFound){
-    User.find({_id : {"$ne" : req.session.Auth._id }}, function(err, users1){
-      users1.find({_id : {"$ne" : req.session.Auth.friendRequests }}, function(err, usersfinal){
+    User.find({$and: [
+                       { _id: {$ne : req.session.Auth._id}},
+                       { _id : { $nin : req.session.Auth.friendRequests}}
+                     ]}, function(err, usersfinal){
         console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        console.log(usersfinal);
+        res.send(usersfinal);
         console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-      })
     })
 });
+
+
 //           netUsers = netUserFound;
 //           if(err){
 //              console.log(err);
