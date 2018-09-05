@@ -22,7 +22,7 @@ router.post('/login', function(req, res, next) {
       if(user.isAdmin){
         return res.redirect('/admin/' + user._id);
       }
-      console.log(req.session.Auth);
+      console.log("LoggedIn: " + req.session.Auth.email);
       return res.redirect('/home/' + user._id);
     });
   })(req, res, next);
@@ -30,6 +30,7 @@ router.post('/login', function(req, res, next) {
 
 //logout controller
 router.get("/logout", function(req, res){
+  console.log(req.session.Auth.email +" Logged Out");
   req.logout();
   res.redirect("/");
 });
@@ -63,12 +64,12 @@ router.post("/register", function(req, res){
           passport.authenticate("local")(req, res, function(){
             req.session.Auth = user;
             //redirect to logged user's home page
+            console.log(req.session.Auth.email + " Registered Succesfully");
             res.redirect("home/" + user._id);
           });
         }
     });
     //if this point is reached, registration was sucessful
-    console.log("A registration was completed successfully.");
 });
 
 module.exports = router;

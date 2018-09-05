@@ -1,21 +1,31 @@
 <% include partials/header.ejs %>
 
-    <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f3f3f3;box-shadow: 1px 1px 1px black;border: 1px solid">
+    <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 1px 1px 1px black;border: 1px solid">
       <div class="container">
         <div class="row" style="margin:15px">
-            <ul>
-          <% freqUsers.forEach(function(freq){ %>
-            <li>
-              <p>  <%= freq.firstname %> <%= freq.lastname %></p>
 
-            </li>
-            <button class="bt btn-default btn-outline-primary" type="button" name="button">Accept</button>
-            <button class="bt btn-default btn-outline-primary" type="button" name="button">Decline</button>
-          <% }); %>
-          </ul>
-        </div>
-        </div>
+          <div class="list-group" style="margin:10px">
+            <% friendreq.forEach(function(freq){ %>
+              <div class="list-group-item list-group-item-action">
+                <a href="/default_profile.jpg">
+                  <span class="pull-left ">
+                       <img src="/default_profile.jpg" width="48" height="48" class=" img-rounded" />
+                  </span>
+                  <%= freq.firstname %> <%= freq.lastname %>
+                </a>
 
+                <form style="float:right;margin:5px" action="/network/<%= user._id %>/decline/<%= freq._id %>" method="post">
+                  <button class="btn btn-default btn-outline-danger"  type="submit" name="button">Decline</button>
+                </form>
+                <form style="float:right;margin:5px" action="/network/<%= user._id %>/accept/<%= freq._id %>" method="post">
+                  <button class="btn btn-default btn-outline-success"  type="submit" name="button">Accept</button>
+                </form>
+
+              </div>
+            <% }); %>
+          </div>
+        </div>
       </div>
+    </div>
 
 <% include partials/footer.ejs %>

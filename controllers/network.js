@@ -12,12 +12,18 @@ router.get("/network/:id",middleware.isLoggedIn,middleware.userAccess,function(r
     var netUsers;
     User.find({$and: [
                        { _id: {$ne : req.session.Auth._id}},
-                       { _id : { $nin : req.session.Auth.friendRequests}}
+                       { _id : { $nin : req.session.Auth.friendRequestsMade}},
+                       { _id : { $nin : req.session.Auth.friendRequestsPending}}
                      ]}, function(err, usersfinal){
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        res.send(usersfinal);
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    })
+
+                       if(err){
+                          console.log(err);
+                       }
+                       else {
+                          res.render("network.ejs",{user: req.session.Auth, friends: req.session.Auth.friends,networkUsers: usersfinal});
+                       }
+
+    });
 });
 
 
@@ -52,11 +58,44 @@ router.post("/network/:id/new/:id2",middleware.isLoggedIn,middleware.userAccess,
     // find user with id2 and push a friend request to his array
     User.updateOne(
       {_id: req.params.id2},
-      { $push: {friendRequests: req.session.Auth._id}},
+      { $push: {friendRequestsPending: req.session.Auth._id}},
       function(err) {
+        User.updateOne(
+          {_id: req.session.Auth._id},
+          { $push: {friendRequestsSent: req.params.id2}},
+          function(err) {
+
+          }
+        );
       }
     );
     res.redirect("/network/" + req.session.Auth._id);
+});
+
+router.post("/network/:id/accept/:id2",middleware.isLoggedIn,middleware.userAccess,function(req,res){
+  //user with id2 sent request to user with id
+  //add user with id to user with id2
+  //at callback, add user with id2 to user with id
+  console.log("EKANEREEEEE");
+  User.updateOne({ $and: [
+                     {_id: req.params.id2},{ $push: {friends: req.params.id}},
+                     {_id: req.params.id2},{ $pull: {friendsRequestsSent: req.params.id}}
+                   ]},
+                   function(err) {
+                      if(err)
+                        return res.send(err);
+                      User.updateOne({ $and: [
+                                         {_id: req.params.id},{ $push: {friends: req.params.id2}},
+                                         {_id: req.params.id},{ $pull: {friendsRequestsPending: req.params.id2}}
+                                       ]},
+                                        function(err) {
+                                          res.redirect("/notifications/" + req.session.Auth._id);
+      });
+    });
+});
+
+router.post("/network/:id/decline/:id2",middleware.isLoggedIn,middleware.userAccess,function(req,res){
+
 });
 
 module.exports = router;

@@ -1,21 +1,24 @@
 <% include partials/header.ejs %>
 
 <h1>YOU ARE THE ADMIN</h1>
-
-<% networkUsers.forEach(function(nuser){ %>
-  <div class="col-sm-4">
-
-    <!-- <a href="/profile/<%= nuser._id %>" style="text-align:center"> -->
-      <img src="/default_profile.jpg" alt="" style="margin:0 auto;display:block">
-      <p><%=nuser.firstname %> <%=nuser.lastname %></p>
-    <!-- </a> -->
-    <div class="" style="display:block;text-align:center">
-        <p><%=nuser.email %></p>
-        <p>Education</p>
-        <p>Work Experience</p>
+<div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 1px 1px 1px black;border: 1px solid">
+  <div class="container">
+    <h4>User List</h4>
+    <form class="" action="/admin/<%= user._id %>" method="post">
+      <button class="btn btn-default btn-outline-success"type="submit" name="button">Export XML File</button>
+    </form>
+    <div class="list-group">
+      <% networkUsers.forEach(function(nuser){ %>
+      <a href="/profile/<%= nuser._id %>" class="list-group-item list-group-item-action">
+        <span class="pull-left ">
+             <img src="/default_profile.jpg" width="48" height="48" class=" img-rounded" />
+        </span>
+         <%= nuser.firstname %> <%= nuser.lastname %> <%= nuser.email %>
+       </a>
+       <% }); %>
     </div>
-
-
   </div>
-<% }); %>
+</div>
+
+
 <% include partials/footer.ejs %>

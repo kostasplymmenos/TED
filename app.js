@@ -36,10 +36,6 @@ app.use(require('cookie-parser')());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-//Router
-//TODO : is it needed?
-var router = express.Router()
-
 //express session is needed for login/registration password security
 app.use(require('express-session')({
     secret            : "pol&kos",
@@ -47,7 +43,6 @@ app.use(require('express-session')({
     saveUninitialized : false
 }));
 
-//not needed
 app.set('view engine', 'ejs');
 
 //passport stuff, used for login and user registration
@@ -56,12 +51,6 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-//setting current user?  
-app.use(function(req, res, next){
-   res.locals.currentUser = req.user;
-   next();
-});
 
 //using controllers required above
 app.use(authController);

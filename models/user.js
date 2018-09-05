@@ -1,6 +1,8 @@
 var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
 
+var Schema = mongoose.Schema;
+
 var UserSchema = new mongoose.Schema({
     email    : String,
     password : String,
@@ -9,8 +11,14 @@ var UserSchema = new mongoose.Schema({
     birthdate: Date,
     image    : {type: String, default: "/default_profile.jpg"},
     isAdmin  : {type: Boolean, default: false},
-    friendRequests : [{
-      type: mongoose.Schema.Types.ObjectId, ref: "User"
+    friendRequestsSent : [{
+      type: Schema.Types.ObjectId, ref: "User"
+    }],
+    friendRequestsPending : [{
+      type: Schema.Types.ObjectId, ref: "User"
+    }],
+    friends : [{
+      type: Schema.Types.ObjectId, ref: "User"
     }]
 });
 

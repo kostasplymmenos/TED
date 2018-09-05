@@ -1,0 +1,172 @@
+<image>/default_profile.jpg</image>
+<isAdmin>false</isAdmin>
+<_id>
+  <_bsontype>ObjectID</_bsontype>
+  <id>
+    <0>91</0>
+    <1>142</1>
+    <2>160</2>
+    <3>191</3>
+    <4>133</4>
+    <5>120</5>
+    <6>245</6>
+    <7>45</7>
+    <8>166</8>
+    <9>131</9>
+    <10>179</10>
+    <11>122</11>
+  </id>
+</_id>
+<email>kost@mail.com</email>
+<firstname>Kostas</firstname>
+<lastname>Stauropoulos</lastname>
+<__v>0</__v>
+,<image>/default_profile.jpg</image>
+<isAdmin>false</isAdmin>
+<_id>
+  <_bsontype>ObjectID</_bsontype>
+  <id>
+    <0>91</0>
+    <1>142</1>
+    <2>160</2>
+    <3>211</3>
+    <4>133</4>
+    <5>120</5>
+    <6>245</6>
+    <7>45</7>
+    <8>166</8>
+    <9>131</9>
+    <10>179</10>
+    <11>123</11>
+  </id>
+</_id>
+<email>kostas@hotmail.gr</email>
+<firstname>Kostas</firstname>
+<lastname>Plymmenos</lastname>
+<__v>0</__v>
+,<image>/default_profile.jpg</image>
+<isAdmin>false</isAdmin>
+<friendRequests>
+  <_bsontype>ObjectID</_bsontype>
+  <id>
+    <0>91</0>
+    <1>142</1>
+    <2>160</2>
+    <3>211</3>
+    <4>133</4>
+    <5>120</5>
+    <6>245</6>
+    <7>45</7>
+    <8>166</8>
+    <9>131</9>
+    <10>179</10>
+    <11>123</11>
+  </id>
+</friendRequests>
+<friendRequests>
+  <_bsontype>ObjectID</_bsontype>
+  <id>
+    <0>91</0>
+    <1>143</1>
+    <2>152</2>
+    <3>126</3>
+    <4>82</4>
+    <5>150</5>
+    <6>168</6>
+    <7>36</7>
+    <8>195</8>
+    <9>146</9>
+    <10>0</10>
+    <11>48</11>
+  </id>
+</friendRequests>
+<_id>
+  <_bsontype>ObjectID</_bsontype>
+  <id>
+    <0>91</0>
+    <1>142</1>
+    <2>160</2>
+    <3>234</3>
+    <4>133</4>
+    <5>120</5>
+    <6>245</6>
+    <7>45</7>
+    <8>166</8>
+    <9>131</9>
+    <10>179</10>
+    <11>124</11>
+  </id>
+</_id>
+<email>pol@hotmail.com</email>
+<firstname>Polydoros</firstname>
+<lastname>Garinis</lastname>
+<__v>0</__v>
+,<image>/default_profile.jpg</image>
+<isAdmin>false</isAdmin>
+<_id>
+  <_bsontype>ObjectID</_bsontype>
+  <id>
+    <0>91</0>
+    <1>142</1>
+    <2>161</2>
+    <3>4</3>
+    <4>133</4>
+    <5>120</5>
+    <6>245</6>
+    <7>45</7>
+    <8>166</8>
+    <9>131</9>
+    <10>179</10>
+    <11>125</11>
+  </id>
+</_id>
+<email>peteraki@mail.com</email>
+<firstname>Panos</firstname>
+<lastname>Stauropoulos</lastname>
+<__v>0</__v>
+,<image>/default_profile.jpg</image>
+<isAdmin>false</isAdmin>
+<_id>
+  <_bsontype>ObjectID</_bsontype>
+  <id>
+    <0>91</0>
+    <1>142</1>
+    <2>161</2>
+    <3>46</3>
+    <4>133</4>
+    <5>120</5>
+    <6>245</6>
+    <7>45</7>
+    <8>166</8>
+    <9>131</9>
+    <10>179</10>
+    <11>126</11>
+  </id>
+</_id>
+<email>johnp@mail.com</email>
+<firstname>John</firstname>
+<lastname>Plymmenos</lastname>
+<__v>0</__v>
+,<image>/default_profile.jpg</image>
+<isAdmin>true</isAdmin>
+<_id>
+  <_bsontype>ObjectID</_bsontype>
+  <id>
+    <0>91</0>
+    <1>143</1>
+    <2>152</2>
+    <3>126</3>
+    <4>82</4>
+    <5>150</5>
+    <6>168</6>
+    <7>36</7>
+    <8>195</8>
+    <9>146</9>
+    <10>0</10>
+    <11>48</11>
+  </id>
+</_id>
+<email>john_p@gmail.com</email>
+<firstname>Yannis</firstname>
+<lastname>Plymmenos</lastname>
+<__v>0</__v>
