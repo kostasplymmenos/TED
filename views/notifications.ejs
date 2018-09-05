@@ -1,10 +1,12 @@
 <% include partials/header.ejs %>
 
     <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 1px 1px 1px black;border: 1px solid">
-      <div class="container">
+      <div class="list-group-item" style="text-align:center">
+        <h4>Friend Requests</h4>
+      </div>
         <div class="row" style="margin:15px">
 
-          <div class="list-group" style="margin:10px">
+          <div class="list-group" style="width: 50%;margin-top:10px;display:table;margin-left:auto;margin-right:auto">
             <% friendreq.forEach(function(freq){ %>
               <div class="list-group-item list-group-item-action">
                 <a href="/default_profile.jpg">
@@ -14,10 +16,10 @@
                   <%= freq.firstname %> <%= freq.lastname %>
                 </a>
 
-                <form style="float:right;margin:5px" action="/network/<%= user._id %>/decline/<%= freq._id %>" method="post">
+                <form style="float:right;margin:5px" action="/network/<%= user._id %>/decline/<%= freq._id %>?_method=PUT" method="post">
                   <button class="btn btn-default btn-outline-danger"  type="submit" name="button">Decline</button>
                 </form>
-                <form style="float:right;margin:5px" action="/network/<%= user._id %>/accept/<%= freq._id %>" method="post">
+                <form style="float:right;margin:5px" action="/network/<%= user._id %>/accept/<%= freq._id %>?_method=PUT" method="post">
                   <button class="btn btn-default btn-outline-success"  type="submit" name="button">Accept</button>
                 </form>
 
@@ -25,7 +27,12 @@
             <% }); %>
           </div>
         </div>
-      </div>
+        <div class="list-group-item" style="text-align:center">
+          <h4>Network Notifications</h4>
+        </div>
+        <div class="row" style="margin:15px">
+        </div>
+
     </div>
 
 <% include partials/footer.ejs %>

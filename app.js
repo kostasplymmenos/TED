@@ -9,6 +9,7 @@ var bodyParser            = require("body-parser");
 var fs                    = require('fs');
 var http                  = require('http');
 var https                 = require('https');
+var methodOverride        = require("method-override");
 
 //vars neededed for ssl
 var privateKey  = fs.readFileSync("./open_ssl/server.key", 'utf8');
@@ -35,6 +36,8 @@ app.use(express.static(__dirname + '/assets/'));
 app.use(require('cookie-parser')());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+// to use put methods when updating or delete
+app.use(methodOverride('_method'));
 
 //express session is needed for login/registration password security
 app.use(require('express-session')({

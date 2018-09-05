@@ -1,23 +1,23 @@
 <% include partials/header.ejs %>
 
 
-    <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 1px 1px 1px black;border: 1px solid">
-      <div class="container">
+    <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+      <div class="list-group-item" style="text-align:center">
         <h4>Connected Users</h4>
+      </div>
+  
+
         <div class="row" style="margin:15px">
-          <% friends.forEach(function(friend){ %>
+          <% friends.forEach(function(fr){ %>
             <div class="col-sm-4" style="margin-bottom:10px">
                 <div class="card" style="width: 18rem;height:25rem">
-                  <a href="/profile/<%= friend._id %>" style="text-align:center">
-                    <img class="" src="<%= friend.image %>" width="200"height="200"  alt="Card image cap">
+                  <a href="/profile/<%= fr._id %>" style="text-align:center">
+                    <img class="" src="<%= fr.image %>" width="200"height="200"  alt="Card image cap">
                     <div class="card-body">
-                      <h5 class="card-title"><%= friend.firstname %> <%= friend.lastname %></h5>
+                      <h5 class="card-title"><%= fr.firstname %> <%= fr.lastname %></h5>
                   </a>
                   <p class="card-text">Description</p>
                   <p class="card-text">Work Experience</p>
-                  <form action="/network/<%=user._id%>/new/<%=friend._id%>" method="post">
-                    <button id="Add" class="btn btn-default btn-outline-primary" type="submit" name="button">Add to Network</button>
-                  </form>
                 </div>
                 </div>
             </div>
@@ -27,15 +27,16 @@
     </div>
 
 
-      <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 1px 1px 1px black;border: 1px solid">
-        <div class="container">
-          <div class="" style="text-align:center">
+      <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+
+          <div class="list-group-item" style="text-align:center">
               <h4>Recommended Users</h4><br>
-              <form class="" action="#" method="get">
-                <input type="text" name="" value="" placeholder="Search by name, company, education etc.">
-                <button class="btn btn-default btn-outline-primary"type="submit" name="button">Search</button>
-              </form>
-          </div>
+
+          <form class="" action="#" method="get">
+            <input style="width:50%" type="text" name="" value="" placeholder="Search by name, company, education etc.">
+            <button class="btn btn-default btn-outline-primary"type="submit" name="button">Search</button>
+          </form>
+</div>
 
 
           <div class="row" style="margin:15px">
