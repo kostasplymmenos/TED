@@ -5,7 +5,7 @@ var ChatSchema = new mongoose.Schema({
   message : [{
     sender: {type: Schema.Types.ObjectId, ref: "User" },
     content: {type: String},
-    date: {type:Date}
+    date: {type:Date, default: Date.now}
   }]
 });
 
