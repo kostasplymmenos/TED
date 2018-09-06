@@ -1,0 +1,62 @@
+<% include partials/header.ejs %>
+
+
+<div class="" style="display: table;margin-top: 30px;margin-left:auto;margin-right:auto">
+  <div class="" style="width:25%;float: left;background-color:#f7f7f7;border-radius: 6px;box-shadow: 2px 1px 1px 1px #505050;border: 1px solid #808080">
+    <div class="list-group-item" style="text-align:center">
+      <p>Your Chats</p>
+    </div>
+    <div class="container">
+      <div class="list-group-item" style="">
+        <a href="#">
+          <span class="pull-center ">
+             <img src="<%=chatUser.image%>" width="48" height="48" class=" img-rounded" />
+          </span>
+          <%=chatUser.firstname%> <%=chatUser.lastname%>
+        </a>
+      </div>
+      <% user.chats.forEach(function(chat){ %>
+      <div class="list-group-item" style="">
+        <a href="#">
+          <span class="pull-left ">
+             <img src="<%=chat.userId.image%>" width="48" height="48" class=" img-rounded" />
+          </span>
+          <%=chat.userId.firstname%> <%=chat.userId.lastname%>
+        </a>
+      </div>
+      <% }); %>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="" style="width:70%;margin-left: 2%;float:left;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+    <div class="list-group-item" style="text-align:center">
+      <h5>Discussion with <%=chatUser.firstname%></h5>
+    </div>
+    <div class="list-group" style="margin:10px">
+      <div class="list-group-item" style="">
+        <p>Message1</p>
+      </div>
+      <div class="list-group-item" style="">
+        <p>Message2</p>
+      </div>
+      <div class="list-group-item" style="">
+        <p>Message3</p>
+      </div>
+    </div>
+    <div style="margin:30px">
+        <form class="" style="" action="#" method="post">
+          <textarea id="txtarea" style="resize:none;width:80%" name="postarea"placeholder="Send a message to <%=chatUser.firstname%>"></textarea>
+          <input class="btn btn-default btn-outline-success" type="submit" value="Send">
+        </form>
+    </div>
+  </div>
+</div>
+
+  <script type="text/javascript">
+    //alert("conn");
+  </script>
+<% include partials/footer.ejs %>

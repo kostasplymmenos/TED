@@ -1,22 +1,21 @@
 <% include partials/header.ejs %>
 
 <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
-  
-    <div class="list-group-item" style="text-align:center">
-      <h4>Your Profile</h4>
-    </div>
-    <div class="row" style="margin:15px">
-      <img src="<%=showUser.image%>" alt="">
-      <div class="" style="margin:20px">
-        <h5><%= showUser.firstname %> <%= showUser.lastname %></h5>
-        <p><%= showUser.email %></p>
-      </div>
+  <div class="list-group-item" style="text-align:center">
+    <h4>Your Profile</h4>
+  </div>
+  <div class="row" style="margin:15px">
+    <img src="<%=showUser.image%>" alt="">
+    <div class="" style="margin:20px">
+      <h5><%= showUser.firstname %> <%= showUser.lastname %></h5>
+      <p><%= showUser.email %></p>
+      <a href="/discussions/<%= user._id %>/chat/<%= showUser._id %>">
+        <button class="btn btn-default btn-outline-primary" >Chat with <%= showUser.firstname %></button>
+      </a>
 
 
     </div>
   </div>
-
-
-
+</div>
 
 <% include partials/footer.ejs %>

@@ -40,11 +40,15 @@ router.get("/",function(req,res){
 
 //register controller (get)
 router.get("/register",function(req,res){
-  res.render("register.ejs");
+  res.render("register.ejs",{error : ""});
 });
 
 //register controller (post)
 router.post("/register", function(req, res){
+    //check if password and passwordCheck are the same
+    if(req.body.password != req.body.passwordCheck)
+      return res.render("register.ejs", {error: "Password don't match"});
+
     //create new user from request's form
     var newUser = new User({email     : req.body.username,
                             firstname : req.body.firstname,
@@ -55,7 +59,7 @@ router.post("/register", function(req, res){
     //register new user to users collection (via mongoose)
     User.register(newUser, req.body.password, function(err, user){
         if(err){
-            return res.render("index.ejs", {error: "Register Failed"});
+            return res.render("index.ejs", {error: "Register Failed. Email already exists"});
         }
         else{
           //log in the new user

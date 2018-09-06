@@ -19,9 +19,12 @@ var UserSchema = new mongoose.Schema({
     }],
     friends : [{
       type: Schema.Types.ObjectId, ref: "User"
+    }],
+    chats :[{
+      chatId : {type : Schema.Types.ObjectId, ref: "Chat"},
+      userId : {type : Schema.Types.ObjectId, ref: "User"}
     }]
 });
-
 UserSchema.plugin(passportLocalMongoose,{usernameField:"email"});
 
 module.exports = mongoose.model("User", UserSchema);
