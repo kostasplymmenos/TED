@@ -6,22 +6,14 @@
     <div class="list-group-item" style="text-align:center">
       <p>Your Chats</p>
     </div>
-    <div class="container">
+    <div class="container" style="margin:5px">
+      <% user.chats.forEach(function(ch){ %>
       <div class="list-group-item" style="">
-        <a href="#">
-          <span class="pull-center ">
-             <img src="<%=chatUser.image%>" width="48" height="48" class=" img-rounded" />
-          </span>
-          <%=chatUser.firstname%> <%=chatUser.lastname%>
-        </a>
-      </div>
-      <% user.chats.forEach(function(chat){ %>
-      <div class="list-group-item" style="">
-        <a href="#">
+        <a href="/discussions/<%=user._id%>/chat/<%= ch.userId._id %>">
           <span class="pull-left ">
-             <img src="<%=chat.image%>" width="48" height="48" class=" img-rounded" />
+             <img src="<%=ch.userId.image%>" width="48" height="48" class=" img-rounded" />
           </span>
-          <%=chat.firstname%> <%=chat.lastname%>
+          <%=ch.userId.firstname%> <%=ch.userId.lastname%>
         </a>
       </div>
       <% }); %>
@@ -38,9 +30,18 @@
     </div>
     <div class="list-group" style="margin:10px">
       <% chat.messages.forEach(function(message){ %>
-        <div class="list-group-item" style="">
-          <p><%= message.sender%> : <%= message.content %> <%= message.date %></p>
-        </div>
+        <% if(message.sender.toString() == user._id.toString() ){ %>
+
+          <div class="list-group-item" style="line-height:1;margin-left:auto;max-width: 50%;overflow-wrap: break-word">
+            <p style="text-align:center"><%= message.date.toLocaleString() %></p>
+            <p style="overflow-wrap: break-word"><%= message.content%></p>
+          </div>
+        <% }else{ %>
+          <div class="list-group-item" style="line-height:1;margin-right:auto; max-width: 50%;overflow-wrap: break-word">
+            <p style="text-align:center"><%= message.date.toLocaleString() %></p>
+            <p style="overflow-wrap: break-word"><%= message.content%></p>
+          </div>
+        <% }%>
       <% }); %>
     </div>
     <div class="" style="margin:30px">
@@ -53,6 +54,9 @@
 </div>
 
   <script type="text/javascript">
-    //alert("conn");
+    setInterval(function() {
+      if(!document.querySelector("#txtarea").value)
+        window.location.replace("/discussions/<%=user._id%>/chat/<%=chatUser._id%>");
+    },5000);
   </script>
 <% include partials/footer.ejs %>
