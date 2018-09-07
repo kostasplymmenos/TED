@@ -21,7 +21,7 @@ var UserSchema = new mongoose.Schema({
       type: Schema.Types.ObjectId, ref: "User"
     }],
     chats :[{
-      chatId : {type : Schema.Types.ObjectId, ref: "Chat"},
+      //_id = id tou chat sto Chat model
       userId : {type : Schema.Types.ObjectId, ref: "User"}
     }]
 });

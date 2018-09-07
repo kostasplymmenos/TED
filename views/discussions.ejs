@@ -19,9 +19,9 @@
       <div class="list-group-item" style="">
         <a href="#">
           <span class="pull-left ">
-             <img src="<%=chat.userId.image%>" width="48" height="48" class=" img-rounded" />
+             <img src="<%=chat.image%>" width="48" height="48" class=" img-rounded" />
           </span>
-          <%=chat.userId.firstname%> <%=chat.userId.lastname%>
+          <%=chat.firstname%> <%=chat.lastname%>
         </a>
       </div>
       <% }); %>
@@ -37,15 +37,11 @@
       <h5>Discussion with <%=chatUser.firstname%></h5>
     </div>
     <div class="list-group" style="margin:10px">
-      <div class="list-group-item" style="">
-        <p>Message1</p>
-      </div>
-      <div class="list-group-item" style="">
-        <p>Message2</p>
-      </div>
-      <div class="list-group-item" style="">
-        <p>Message3</p>
-      </div>
+      <% chat.messages.forEach(function(message){ %>
+        <div class="list-group-item" style="">
+          <p><%= message.sender%> : <%= message.content %> <%= message.date %></p>
+        </div>
+      <% }); %>
     </div>
     <div class="" style="margin:30px">
         <form class="form-inline" style="" action="/discussions/<%=user._id%>/send/<%=chatUser._id%>?_method=PUT" method="post">
