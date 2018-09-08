@@ -10,6 +10,14 @@ var UserSchema = new mongoose.Schema({
     lastname : String,
     birthdate: Date,
     image    : {type: String, default: "/default_profile.jpg"},
+    telephone: String,
+    education: String,
+    skills   : [{
+        type: String
+    }],
+    bio      : String,
+    workPosition : String,
+    company  : String,
     isAdmin  : {type: Boolean, default: false},
     friendRequestsSent : [{
       type: Schema.Types.ObjectId, ref: "User"

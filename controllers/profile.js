@@ -7,13 +7,12 @@ var middleware = require("./../helpers/auth_middleware.js");
 var router     = express.Router();
 router.use(bodyParser.urlencoded({extended: true}));
 
+//get user with id profile page
 router.get("/profile/:id",middleware.isLoggedIn,function(req,res){
   User.find({_id:req.params.id}, function(err,foundUser){
-      if(err){
-         console.log(err);
-      } else {
-         res.render("profile.ejs",{user: req.session.Auth, showUser: foundUser[0]});
-      }
+    if(err) return res.send(err);
+    else
+      res.render("profile.ejs",{user: req.session.Auth, showUser: foundUser[0]});
   });
 });
 

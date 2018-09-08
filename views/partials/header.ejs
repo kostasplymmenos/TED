@@ -6,6 +6,7 @@
     <!-- Cant include bootstrap locally ??? -->
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
   <body style="background-color:#417d9a">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -36,7 +37,7 @@
            <a class="nav-link" href="/profile/<%=user._id %>">Profile</a>
          </li>
          <li class="nav-item">
-           <a class="nav-link" href="#">Settings</a>
+           <a class="nav-link" href="/settings/<%=user._id %>">Settings</a>
          </li>
 
         </ul>

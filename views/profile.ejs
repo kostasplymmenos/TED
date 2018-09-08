@@ -2,20 +2,85 @@
 
 <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
   <div class="list-group-item" style="text-align:center">
-    <h4>Your Profile</h4>
+    <h4>Personal Information</h4>
   </div>
   <div class="row" style="margin:15px">
     <img src="<%=showUser.image%>" alt="">
-    <div class="" style="margin:20px">
-      <h5><%= showUser.firstname %> <%= showUser.lastname %></h5>
-      <p><%= showUser.email %></p>
-      <a href="/discussions/<%= user._id %>/chat/<%= showUser._id %>">
-        <button class="btn btn-default btn-outline-primary" >Chat with <%= showUser.firstname %></button>
-      </a>
+    <div class="" style="width:70%;margin:20px">
+      <h5><%= showUser.firstname %> <%= showUser.lastname %>  <span style="float:right">Connections: <%=showUser.friends.length%> </span> </h5>
+      <p>Email: <%= showUser.email %></p>
+      <p>Birth Date: <%= showUser.birthdate %></p>
+      <p>Telephone Number: <%= showUser.telephone %></p>
 
+      <% if(showUser._id.toString() != user._id.toString()) { %>
+        <a href="/discussions/<%= user._id %>/chat/<%= showUser._id %>">
+          <button class="btn btn-default btn-outline-primary" >Chat with <%= showUser.firstname %></button>
+        </a>
+      <% } %>
 
     </div>
   </div>
+</div>
+
+<div class="" style="margin-top: 10px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+  <div class="list-group-item" style="text-align:center">
+    <h4>Professional Information</h4>
+  </div>
+  <div style="margin:10px">
+
+    <div class="list-group-item">
+      <% if(showUser.bio) { %>
+        <p><%=showUser.bio%></p>
+        <button class="btn btn-default btn-outline-primary"type="submit" name="button">Update Bio</button>
+      <% }else{ %>
+        <a href="#">
+          <button class="btn btn-default btn-outline-primary"type="submit" name="button">Add Bio</button>
+        </a>
+      <% } %>
+    </div>
+    <div class="list-group-item">
+    <% if(showUser.workPosition) { %>
+      <p><%=showUser.workPosition%></p>
+      <button class="btn btn-default btn-outline-primary"type="submit" name="button">Update Work Position</button>
+    <% }else{ %>
+      <a href="#">
+        <button class="btn btn-default btn-outline-primary"type="submit" name="button">Add Work Position</button>
+      </a>
+    <% } %>
+    </div>
+      <div class="list-group-item">
+    <% if(showUser.company) { %>
+      <p><%=showUser.company%></p>
+      <button class="btn btn-default btn-outline-primary"type="submit" name="button">Update Company</button>
+    <% }else{ %>
+      <a href="#">
+        <button class="btn btn-default btn-outline-primary"type="submit" name="button">Add Company</button>
+      </a>
+    <% } %>
+    </div>
+    <div class="list-group-item">
+    <% if(showUser.education) { %>
+      <p><%=showUser.education%></p>
+      <button class="btn btn-default btn-outline-primary"type="submit" name="button">Update Education</button>
+    <% }else{ %>
+      <a href="#">
+        <button class="btn btn-default btn-outline-primary"type="submit" name="button">Add Education</button>
+      </a>
+    <% } %>
+    </div>
+    <div class="list-group-item">
+    <% if(showUser.skills.length != 0) { %>
+      <p><%=showUser.skills%></p>
+      <button class="btn btn-default btn-outline-primary"type="submit" name="button">Update Skills</button>
+    <% }else{ %>
+      <a href="#">
+        <button class="btn btn-default btn-outline-primary"type="submit" name="button">Add Skills</button>
+      </a>
+    <% } %>
+    </div>
+  </div>
+
+
 </div>
 
 <% include partials/footer.ejs %>

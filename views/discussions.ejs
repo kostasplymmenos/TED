@@ -28,7 +28,7 @@
     <div class="list-group-item" style="text-align:center">
       <h5>Discussion with <%=chatUser.firstname%></h5>
     </div>
-    <div class="list-group" style="margin:10px">
+    <div id="reloadContent" class="list-group" style="margin:10px">
       <% chat.messages.forEach(function(message){ %>
         <% if(message.sender.toString() == user._id.toString() ){ %>
 
@@ -55,8 +55,7 @@
 
   <script type="text/javascript">
     setInterval(function() {
-      if(!document.querySelector("#txtarea").value)
-        window.location.replace("/discussions/<%=user._id%>/chat/<%=chatUser._id%>");
-    },5000);
+      $("#reloadContent").load(location.href+" #reloadContent>*","");
+    }, 3000);
   </script>
 <% include partials/footer.ejs %>

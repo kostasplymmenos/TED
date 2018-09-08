@@ -7,6 +7,9 @@
         <div class="row" style="margin:15px">
 
           <div class="list-group" style="width: 50%;margin-top:10px;display:table;margin-left:auto;margin-right:auto">
+            <% if(friendreq.length == 0){%>
+              <p style="text-align:center">You have no pending friend requests</p>
+              <%}%>
             <% friendreq.forEach(function(freq){ %>
               <div class="list-group-item list-group-item-action">
                 <a href="/default_profile.jpg">

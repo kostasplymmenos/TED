@@ -27,6 +27,7 @@ var profileController       = require("./controllers/profile.js");
 var notificationsController = require("./controllers/notifications.js");
 var adminController         = require("./controllers/admin.js");
 var discussionsController   = require("./controllers/discussions.js");
+var settingsController      = require("./controllers/settings.js");
 
 //connect to db
 //useNewUrlParser: true to prevent warnings
@@ -64,13 +65,16 @@ app.use(profileController);
 app.use(notificationsController);
 app.use(adminController);
 app.use(discussionsController);
+app.use(settingsController);
 
 //vars to run http / https (on different ports)
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
-httpServer.listen(8080);
-httpsServer.listen(8443);
 
-// app.listen(8090,function(){
-//   console.log("Server Has Started");
-// });
+httpServer.listen(8080,function(){
+   console.log("[INFO] HTTP Server Has Started");
+});
+
+httpsServer.listen(8443,function(){
+   console.log("[INFO] HTTPS Server Has Started");
+});

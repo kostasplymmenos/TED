@@ -1,53 +1,52 @@
-var express = require('express');
-var app = express();
-var router = express.Router();
+var express    = require('express');
 var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
-var User = require('./../models/user.js');
+var mongoose   = require("mongoose");
+var User       = require('./../models/user.js');
 var middleware = require("./../helpers/auth_middleware.js");
-var fs = require('fs');
-var objtoXML = require('object-to-xml');
+var fs         = require('fs');
+var objtoXML   = require('object-to-xml'); // for exporting user data to xml
 
+//setting up router
+var router = express.Router();
 router.use(bodyParser.urlencoded({extended: true}));
 
+//admin's main page
 router.get("/admin/:id",middleware.isLoggedIn,middleware.userAccess,function(req,res){
-    var netUsers;
+    //find all users of connectedin except admin
     User.find({_id: { "$ne": req.session.Auth._id }},function(err,netUserFound){
-      netUsers = netUserFound;
-      if(err){
-         console.log(err);
-      } else {
-         res.render("admin_home.ejs",{user: req.session.Auth, networkUsers: netUsers});
-      }
+      if(err)
+         return res.render("err.js",{error: err});
+      else
+         return res.render("admin_home.ejs",{user: req.session.Auth, networkUsers: netUserFound});
     });
 });
+
+//export user data TODO: change to get method
 router.post("/admin/:id",middleware.isLoggedIn,middleware.userAccess,function(req,res){
+  //to store users in XML object form
+  //will be exported in the end
   var usersArr = [];
+
+  //find all users of database(except admin)
   User.find({_id: { "$ne": req.session.Auth._id }},function(err,netUserFound){
-    if(err){
-       console.log(err);
-    }
+    if(err)
+       return reconsole.log(err);
     else {
+      //push each user's data in xml form to usersArr
       netUserFound.forEach(function(nuser){
         usersArr.push(objtoXML(nuser.toObject()));
       });
 
-      // fs.open('/userData.xml', 'w+', function(err,fd) {
-      //   if(err) {
-      //     return console.log(err);
-      //   }
-      // });
-      fs.writeFile("./userData.xml" ,usersArr.toString(), function(err) {
-        if(err) {
-          return console.log(err);
-        }
-        console.log("The file was saved!");
-        res.redirect("/admin/" + req.session.Auth._id);
+      //write file to server's data
+      var pathToExport = "./userData.xml";
+      fs.writeFile(pathToExport ,usersArr.toString(), function(err) {
+        if(err)
+          return res.render("err.js",{error: err});
+        console.log("XML data exported successfully to "+ pathToExport);
+        return res.redirect("/admin/" + req.session.Auth._id);
       });
     }
   });
 });
-
-
 
 module.exports = router;

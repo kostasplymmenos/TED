@@ -35,7 +35,7 @@
       <h5>Welcome Back, <%= user.firstname %> <%= user.lastname %></h5>
     </div>
     <div style="" class="container">
-        <form class="form-group" style="margin:20px" action="#" method="post">
+        <form class="form-group" style="margin:20px" action="/home/<%=user._id%>" method="post">
           <textarea id="txtarea" style="resize:none;margin:0 auto" name="postarea"rows="3" cols="100" placeholder="What are you thinking?"></textarea>
 
           <label for="picLabel">Upload an Image</label>
@@ -43,52 +43,35 @@
           <input type="submit" value="Post">
         </form>
     </div>
+    <!--  The posts starts here -->
     <div class="list-group" style="margin:10px">
-      <div class="list-group-item list-group-item-action">
-        <a href="/default_profile.jpg">
-          <span class="pull-left ">
-               <img src="/default_profile.jpg" width="48" height="48" class=" img-rounded" />
+      <% posts.sort().reverse().forEach(function(post){ %>
+        <div class="list-group-item list-group-item">
+          <span style="float:right">
+            <%=post.date.toLocaleString()%>
           </span>
-          Poster's Name
-        </a>
-        <p>Post Content</p>
-      </div>
-      <div class="list-group-item list-group-item-action">
-        <a href="/default_profile.jpg">
-          <span class="pull-left ">
-               <img src="/default_profile.jpg" width="48" height="48" class=" img-rounded" />
-          </span>
-          Poster's Name
-        </a>
-        <p>Post Content</p>
-      </div>
-      <div class="list-group-item list-group-item-action">
-        <a href="/default_profile.jpg">
-          <span class="pull-left ">
-               <img src="/default_profile.jpg" width="48" height="48" class=" img-rounded" />
-          </span>
-          Poster's Name
-        </a>
-        <p>Post Content</p>
-      </div>
-      <div class="list-group-item list-group-item-action">
-        <a href="/default_profile.jpg">
-          <span class="pull-left ">
-               <img src="/default_profile.jpg" width="48" height="48" class=" img-rounded" />
-          </span>
-          Poster's Name
-        </a>
-        <p>Post Content</p>
-      </div>
-      <div class="list-group-item list-group-item-action">
-        <a href="/default_profile.jpg">
-          <span class="pull-left ">
-               <img src="/default_profile.jpg" width="48" height="48" class=" img-rounded" />
-          </span>
-          Poster's Name
-        </a>
-        <p>Post Content</p>
-      </div>
+          <a href="/profile/<%=post.author._id%>">
+            <span class="pull-left ">
+                 <img src="<%=post.author.image%>" width="48" height="48" class=" img-rounded" />
+            </span>
+            <%=post.author.firstname%> <%=post.author.lastname%>
+          </a>
+          <p><%=post.text%></p>
+          <img src="<%=post.image%>" alt="">
+          <a href="/home/like/<%=post._id%>?_method=PUT">
+            <button class="btn btn-default btn-success"type="submit" name="button">Like</button>
+          </a>
+          Likes: <%=post.likes.length%>
+          <p>Comment1</p>
+          <p>Comment2</p>
+
+          <form class="" action="#" method="post">
+            <input type="text" name="" value="" placeholder="Make a comment">
+            <input type="submit" name="" value="Comment">
+          </form>
+        </div>
+      <% });%>
+
     </div>
   </div>
 </div>
