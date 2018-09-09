@@ -8,6 +8,10 @@ var middleware = require("./../helpers/auth_middleware.js");
 var router = express.Router();
 router.use(bodyParser.urlencoded({extended: true}));
 
+router.get("/discussions/:id",middleware.isLoggedIn,middleware.userAccess,function(req,res){
+  res.redirect("/discussions/" + req.session.Auth._id + "/chat/" + req.session.Auth.chats.reverse()[0].userId);
+});
+
 //when user clicks to chat with user id2
 router.get("/discussions/:id/chat/:id2",middleware.isLoggedIn,middleware.userAccess,function(req,res){
   //whole user (with id2) needs to be passed

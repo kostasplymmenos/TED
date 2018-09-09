@@ -1,30 +1,51 @@
 <% include partials/header.ejs %>
 
-<div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+<div class="" style=";margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
   <div class="list-group-item" style="text-align:center">
     <h4>Your Settings</h4>
   </div>
+<div class="" style="display:table;margin-left:auto;margin-right:auto">
 
-  <div class="list-group-item" style="text-align:center;margin:20px">
+
+  <div class="" style="margin:20px;">
       <p>Email: <%= user.email %></p>
-      <form action="#" method="post">
-        New Email:
-        <input class="form-control" type="email" name="username" value="" required>
+      <form action="/settings/<%=user._id%>/email?_method=PUT" method="post">
+        <div class="form-group">
+          <label for="newMail">New Email:</label>
+          <input type="text" class="form-control" id="newMail" name="newEmail" placeholder="">
+        </div>
         <button class="btn btn-default btn-outline-primary"type="submit" name="button">Change Email</button>
       </form>
+    </div>
+
+    <div class="" style="margin:20px;">
+      <p>Telephone Number: <%= user.telephone %></p>
+    <form action="/settings/<%=user._id%>/telephone?_method=PUT" method="post">
+      <div class="form-group">
+        <label for="newTel">New Telephone Number:</label>
+        <input type="text" class="form-control" id="newTel" placeholder="">
+      </div>
+      <button class="btn btn-default btn-outline-primary"type="submit" name="button">Change Number</button>
+    </form>
   </div>
 
-  <div class="list-group-item" style="text-align:center;margin:20px">
-      <p>Telephone: <%= user.telephone %></p>
-      <form action="#" method="post">
-        <input class="form-control" type="string" name="username" value="" required>
-      <button class="btn btn-default btn-outline-primary"type="submit" name="button">Change Telephone Number</button>
+
+  <div class="" style="margin:20px;">
+  <form action="/settings/<%=user._id%>/password?_method=PUT" method="post">
+    <div class="form-group">
+      <label for="formGroupExampleInput">New Password:</label>
+      <input type="text" class="form-control" id="formGroupExampleInput" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="formGroupExampleInput2">Confirm Password:</label>
+      <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="">
+    </div>
+    <button class="btn btn-default btn-outline-primary"type="submit" name="button">Change Password</button>
+  </form>
+
   </div>
 
-  <div class="list-group-item" style="text-align:center;margin:20px">
-      <button class="btn btn-default btn-outline-primary"type="submit" name="button">Change Password</button>
-  </div>
-
+</div>
 </div>
 
 <% include partials/footer.ejs %>

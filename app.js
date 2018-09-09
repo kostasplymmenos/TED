@@ -28,6 +28,7 @@ var notificationsController = require("./controllers/notifications.js");
 var adminController         = require("./controllers/admin.js");
 var discussionsController   = require("./controllers/discussions.js");
 var settingsController      = require("./controllers/settings.js");
+var jobsController      = require("./controllers/jobs.js");
 
 //connect to db
 //useNewUrlParser: true to prevent warnings
@@ -66,6 +67,7 @@ app.use(notificationsController);
 app.use(adminController);
 app.use(discussionsController);
 app.use(settingsController);
+app.use(jobsController);
 
 //vars to run http / https (on different ports)
 var httpServer = http.createServer(app);
