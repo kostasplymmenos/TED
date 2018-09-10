@@ -35,7 +35,7 @@ router.post('/login', function(req, res, next) {
 
 //logout controller
 router.get("/logout", function(req, res){
-  console.log("[INFO] User Logged Out: ", + req.session.Auth.email);
+  console.log("[INFO] User Logged Out: " + req.session.Auth.email);
   //terminate user session
   req.logout();
   res.redirect("/");

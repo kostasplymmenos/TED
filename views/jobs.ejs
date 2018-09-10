@@ -5,33 +5,38 @@
       <div class="list-group-item" style="text-align:center">
         <h4>Jobs Posted By Connected Users</h4>
       </div>
+      <div style="text-align:center;">
+        <a href="/jobs/newJob">
+          <button style="margin-left: auto;margin-right: auto;text-align:center;margin-top:1.5%"class="btn btn-default btn-outline-primary"type="submit" name="button">Post New Job</button>
+        </a>
+        <a href="/jobs/jobsPosted">
+          <button style="margin-left: auto;margin-right: auto;text-align:center;margin-top:1.5%"class="btn btn-default btn-outline-primary"type="submit" name="button">View Posted Jobs</button>
+        </a>
+        <p><%=message%></p>
+      </div>
+
+      <hr>
 
         <div class="row" style="margin:15px">
+          <% jobs.forEach(function(job){ %>
+            <div class="col-sm-4" style="margin-bottom:10px">
+                <div class="card" style="text-align: center;width: 18rem;height:23rem">
+                  <a href="/jobs/show/<%=job._id%>" style="text-align:center">
 
-            <div class="col-sm-4" style="margin-bottom:10px">
-                <div class="card" style="width: 18rem;height:25rem">
-                  <a href="#" style="text-align:center">
-                    <img class="" src="" width="200"height="200"  alt="Card image cap">
                     <div class="card-body">
-                      <h5 class="card-title">Job Title</h5>
+                      <h5 class="card-title"><%=job.title%></h5>
                   </a>
-                  <p class="card-text">Description</p>
-                  <p class="card-text">Company</p>
-                </div>
+                  <hr>
+                  <p class="card-text">Company:<br><%=job.company%></p>
+                  <p class="card-text">Location:<br><%=job.location%></p>
+                  <p class="card-text">Date Posted:<br><%=job.postDate.toLocaleString()%></p>
+                  </div>
+                  <a href="/jobs/show/<%=job._id%>">
+                    <button style="margin-bottom:10px"class="btn btn-default btn-outline-primary"type="button" name="button">View More</button>
+                  </a>
                 </div>
             </div>
-            <div class="col-sm-4" style="margin-bottom:10px">
-                <div class="card" style="width: 18rem;height:25rem">
-                  <a href="#" style="text-align:center">
-                    <img class="" src="" width="200"height="200"  alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title">Job Title</h5>
-                  </a>
-                  <p class="card-text">Description</p>
-                  <p class="card-text">Company</p>
-                </div>
-                </div>
-            </div>
+          <%});%>
 
         </div>
       </div>

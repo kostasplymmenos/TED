@@ -1,0 +1,22 @@
+<% include partials/header.ejs %>
+
+<div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+  <div class="list-group-item" style="text-align:center">
+    <h4>Jobs Posted By You</h4>
+  </div>
+  <div class="" style="margin:20px">
+    <%jobs.forEach(function(job){ %>
+      <div class="list-group-item" style="">
+        <a href="/jobs/show/<%=job._id%>">
+          <h5><%=job.title%></h5>
+        </a>
+        <p>Applicants: <%=job.usersApplied.length%></p>
+
+      </div>
+    <%});%>
+  </div>
+
+
+</div>
+
+<% include partials/footer.ejs %>

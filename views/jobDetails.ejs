@@ -1,0 +1,42 @@
+<% include partials/header.ejs %>
+
+<div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+  <div class="list-group-item" style="text-align:center">
+    <h4><%=job.title%></h4>
+  </div>
+  <div style="text-align:center;">
+    <form class="" action="/jobs/apply/<%= job._id %>" method="post">
+      <button style="margin-left: auto;margin-right: auto;text-align:center;margin-top:1.5%"class="btn btn-default btn-outline-primary"type="submit" name="button">Apply</button>
+    </form>
+
+    <hr>
+  </div>
+  <div class="" style="margin:20px">
+    <div class="list-group-item" style="text-align:center;margin:10px">
+    <h5>Company :</h5>
+    <p><%= job.company %></p>
+  </div>
+    <div class="list-group-item" style="text-align:center;margin:10px">
+    <h5>Description :</h5>
+    <p><%= job.description %></p>
+</div>
+    <div class="list-group-item" style="text-align:center;margin:10px">
+    <h5>Skills Required :</h5>
+    <p><%= job.skillsRequired %></p>
+</div>
+    <div class="list-group-item" style="text-align:center;margin:10px">
+    <h5>Job Type :</h5>
+    <p><%= job.jobType %></p>
+</div>
+    <div class="list-group-item" style="text-align:center;margin:10px">
+    <h5>Location :</h5>
+    <p><%= job.location %></p>
+</div>
+    <div class="list-group-item" style="text-align:center;margin:10px">
+    <h5>Date Posted :</h5>
+    <p><%= job.postDate %></p>
+</div>
+  </div>
+</div>
+
+<% include partials/footer.ejs %>

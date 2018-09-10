@@ -1,0 +1,46 @@
+<% include partials/header.ejs %>
+
+    <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+      <div class="list-group-item" style="text-align:center">
+        <h4>Post a new Job</h4>
+      </div>
+      <div class="col-lg-4 form-group" style="margin:10px auto 10px;">
+        <form action="/jobs/newJob" method="post">
+          <label for="titleLabel">Title</label>
+          <input class="form-control" id="titleLabel" type="text" name="title" value="" required> <br>
+          <label for="companyLabel">Company</label>
+          <input class="form-control" id="companyLabel" type="text" name="company" value="" required> <br>
+          <label for="descriptionLabel">Description</label>
+          <textarea class="form-control" rows="4" id="descriptionLabel" name="description" required></textarea>
+          <label for="locationLabel">Location</label>
+          <input class="form-control" id="locationLabel" type="text" name="location" value="" required> <br>
+          <label for="jobTypeLabel">Job Type</label>
+          <input class="form-control" id="jobTypeLabel" type="text" name="jobType" value="Full-time" required> <br>
+          <label for="skillsLabel">Skills (Select Skills from the selector below)</label>
+          <textarea readonly class="form-control" rows="4" id="skillsLabel" name="skills"></textarea>
+          <select id="skillset" onchange="appendtoSkillset();">
+            <% var skills = ["Software Engineering","Computer Science","Data Science","Management","Pharmacy","Chemistry"]; %>
+            <option value=""></option>
+              <% skills.forEach(function(skill){ %>
+                <option id="<%=skill%>_id"value="<%=skill%>"><%=skill%></option>
+
+            <% }); %>
+          </select>
+          <input type="submit" value="Post">
+        </form>
+      </div>
+
+    </div>
+    <script type="text/javascript">
+      function appendtoSkillset(){
+         var skillset = document.getElementById("skillset");
+         var selectedValue = skillset.options[skillset.selectedIndex].value;
+         skillset.options[skillset.selectedIndex].remove();
+         var skillsform = document.getElementById("skillsLabel");
+         skillsform.value = skillsform.value+ selectedValue;
+         skillsform.value = skillsform.value + "\n";
+      }
+    </script>
+
+
+  <% include partials/footer.ejs %>
