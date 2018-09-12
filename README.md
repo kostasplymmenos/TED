@@ -3,4 +3,4 @@
 Developed with NodeJS Express MongoDB
 
 Main Page
-![Alt text](assets/back_new.jpg?raw=true "Title")
+![Alt text](image.png?raw=true "Title")
