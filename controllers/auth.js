@@ -9,6 +9,10 @@ var bodyParser            = require("body-parser");
 var router = express.Router();
 router.use(bodyParser.urlencoded({extended: true}));
 
+//upload image
+var fileUpload = require('express-fileupload');
+router.use(fileUpload());
+
 //login controller
 router.post('/login', function(req, res, next) {
   //locally authenticate user's legitimacy
@@ -59,19 +63,30 @@ router.post("/register", function(req, res){
   if(req.body.password != req.body.passwordCheck)
     return res.render("register.ejs", {error: "Password don't match"});
 
-    //create new user from request's form
+
+  //create new user from request's form
   var newUser = new User({email     : req.body.username,
                           firstname : req.body.firstname,
                           lastname  : req.body.lastname,
-                          birthdate : req.body.birthdate
+                          birthdate : req.body.birthdate,
+                          image     : "/image_uploads/"+req.body.firstname+".jpg"
   });
+
+  console.log("image : "+newUser.image);
 
   //register new user to users collection (via mongoose)
   User.register(newUser, req.body.password, function(err, user){
     if(err)
       return res.render("index.ejs", {error: "Register Failed. Email already exists"});
-
     else{
+      //download image to server (if any was uploaded)
+      if (req.files)
+        req.files.pic.mv(__dirname+"/../assets/image_uploads/"+req.body.firstname+".jpg", function(err) {
+         if (err)
+           return res.status(500).send(err);
+         console.log("Uploaded image successfully!\n")
+       });
+
       //log in the new user
       passport.authenticate("local")(req, res, function(err){
         if(err)

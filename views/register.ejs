@@ -29,7 +29,7 @@
     <div style="margin:10px auto 10px;color:white" class="col-lg-3 form-group">
       <h3>Register Now!</h3>
       <p style="color:red"> <%= error %></p>
-        <form action="/register" method="post">
+        <form ref="uploadForm" id="uploadForm" encType="multipart/form-data" action="/register" method="post">
           <label for="emailLabel">Email address</label>
           <input class="form-control" id="emailLabel" type="email" name="username" value="" required> <br>
           <label for="pswdLabel">Password</label>
