@@ -11,7 +11,7 @@ var router = express.Router();
 router.use(bodyParser.urlencoded({extended: true}));
 
 //admin's main page
-router.get("/admin/:id",middleware.isLoggedIn,middleware.userAccess,function(req,res){
+router.get("/admin",middleware.isLoggedIn,function(req,res){
     //find all users of connectedin except admin
     User.find({_id: { "$ne": req.session.Auth._id }},function(err,netUserFound){
       if(err)
@@ -21,8 +21,8 @@ router.get("/admin/:id",middleware.isLoggedIn,middleware.userAccess,function(req
     });
 });
 
-//export user data TODO: change to get method
-router.post("/admin/:id",middleware.isLoggedIn,middleware.userAccess,function(req,res){
+//export user data TODO: select user and select which attributes to export
+router.get("/admin/export",middleware.isLoggedIn,middleware.userAccess,function(req,res){
   //to store users in XML object form
   //will be exported in the end
   var usersArr = [];
@@ -30,7 +30,7 @@ router.post("/admin/:id",middleware.isLoggedIn,middleware.userAccess,function(re
   //find all users of database(except admin)
   User.find({_id: { "$ne": req.session.Auth._id }},function(err,netUserFound){
     if(err)
-       return reconsole.log(err);
+       return res.send(err);
     else {
       //push each user's data in xml form to usersArr
       netUserFound.forEach(function(nuser){
@@ -43,7 +43,7 @@ router.post("/admin/:id",middleware.isLoggedIn,middleware.userAccess,function(re
         if(err)
           return res.render("err.js",{error: err});
         console.log("XML data exported successfully to "+ pathToExport);
-        return res.redirect("/admin/" + req.session.Auth._id);
+        return res.redirect("/admin");
       });
     }
   });

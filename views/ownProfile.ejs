@@ -1,0 +1,195 @@
+<% include partials/header.ejs %>
+
+<div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+  <div class="list-group-item" style="text-align:center">
+    <h4>Personal Information</h4>
+  </div>
+  <div class="row" style="margin:15px">
+    <img src="<%=showUser.image%>" width="240" height="240"alt="">
+    <div class="" style="width:70%;margin:20px">
+      <h5><%= showUser.firstname %> <%= showUser.lastname %>  <span style="float:right">Connections: <%=showUser.friends.length%> </span> </h5>
+      <p>Email: <%= showUser.email %></p>
+      <p>Birth Date: <%= showUser.birthdate %></p>
+      <p>Telephone Number: <%= showUser.telephone %></p>
+    </div>
+  </div>
+</div>
+
+<div class="" style="margin-top: 10px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+  <div class="list-group-item" style="text-align:center">
+    <h4>Professional Information</h4>
+  </div>
+  <div style="margin:10px">
+
+    <div class="list-group-item">
+      <% if(showUser.bio) { %>
+        <div class="bioInitial">
+          <p><%=showUser.bio%></p>
+          <button class="btn btn-default btn-outline-primary" type="submit" onclick="updateBio();">Update Bio</button>
+        </div>
+
+        <form class="form-inline bioUpdate" style="display:none;"action="/profile/update/bio?_method=PUT" method="post">
+          <textarea name="info" rows="3" cols="80"> <%= showUser.bio%></textarea>
+          <button class="btn btn-default btn-outline-primary"type="submit" name="button">Submit Bio</button>
+        </form>
+
+      <% }else{ %>
+        <button class="btn btn-default btn-outline-primary" id="addbiobtn" type="button" name="button" onclick="addBio();">Add Bio</button>
+        <form class="form-inline" id="bioformAdd" style="display:none;" action="/profile/update/bio?_method=PUT" method="post">
+          <textarea name="info" rows="3" cols="80"></textarea>
+          <button class="btn btn-default btn-outline-primary"type="submit" name="button">Submit Bio</button>
+        </form>
+      <% } %>
+    </div>
+
+
+    <div class="list-group-item">
+      <% if(showUser.workPosition) { %>
+        <div class="workInitial">
+          <p><%=showUser.workPosition%></p>
+          <button class="btn btn-default btn-outline-primary" type="submit" onclick="updateWork();">Update Work Position</button>
+        </div>
+
+        <form class="form-inline workUpdate" style="display:none;"action="/profile/update/work?_method=PUT" method="post">
+          <textarea name="info" rows="3" cols="80"> <%= showUser.workPosition%></textarea>
+          <button class="btn btn-default btn-outline-primary"type="submit" name="button">Submit Position</button>
+        </form>
+
+      <% }else{ %>
+        <button class="btn btn-default btn-outline-primary" id="addworkbtn" type="button" onclick="addWork();">Add Work Position</button>
+        <form class="form-inline" id="workformAdd" style="display:none;" action="/profile/update/work?_method=PUT" method="post">
+          <textarea name="info" rows="3" cols="80"></textarea>
+          <button class="btn btn-default btn-outline-primary"type="submit" name="button">Submit Position</button>
+        </form>
+      <% } %>
+    </div>
+
+
+
+    <div class="list-group-item">
+      <% if(showUser.education) { %>
+        <div class="educationInitial">
+          <p><%=showUser.education%></p>
+          <button class="btn btn-default btn-outline-primary" type="submit" onclick="updateEducation();">Update Education</button>
+        </div>
+
+        <form class="form-inline educationUpdate" style="display:none;"action="/profile/update/education?_method=PUT" method="post">
+          <textarea name="info" rows="3" cols="80"> <%= showUser.education%></textarea>
+          <button class="btn btn-default btn-outline-primary"type="submit" name="button">Submit Education</button>
+        </form>
+
+      <% }else{ %>
+        <button class="btn btn-default btn-outline-primary" id="addeducationbtn" type="button" onclick="addEducation();">Add Education</button>
+        <form class="form-inline" id="educationformAdd" style="display:none;" action="/profile/update/education?_method=PUT" method="post">
+          <textarea name="info" rows="3" cols="80"></textarea>
+          <button class="btn btn-default btn-outline-primary" type="submit" name="button">Submit Education</button>
+        </form>
+      <% } %>
+    </div>
+
+    <div class="list-group-item">
+      <% if(showUser.company) { %>
+        <div class="companyInitial">
+          <p><%=showUser.company%></p>
+          <button class="btn btn-default btn-outline-primary" type="submit" onclick="updateCompany();">Update Company</button>
+        </div>
+
+        <form class="form-inline companyUpdate" style="display:none;"action="/profile/update/company?_method=PUT" method="post">
+          <textarea name="info" rows="3" cols="80"> <%= showUser.company%></textarea>
+          <button class="btn btn-default btn-outline-primary"type="submit" name="button">Submit Company</button>
+        </form>
+
+      <% }else{ %>
+        <button class="btn btn-default btn-outline-primary" id="addcompanybtn" type="button" onclick="addCompany();">Add Company</button>
+        <form class="form-inline" id="companyformAdd" style="display:none;" action="/profile/update/company?_method=PUT" method="post">
+          <textarea name="info" rows="3" cols="80"></textarea>
+          <button class="btn btn-default btn-outline-primary" type="submit" name="button">Submit Company</button>
+        </form>
+      <% } %>
+    </div>
+    <div class="list-group-item">
+      <% showUser.skills.forEach(function(skill){ %>
+        <p><%=skill%></p>
+      <% });%>
+
+      <form class="form-inline" action="/profile/update/skills?_method=PUT" method="post">
+          <% var skillsArr = ["Software Engineering","Computer Science","Data Science","Management","Pharmacy","Chemistry"]; %>
+          <input name="selectedSkill" list="skills">
+          <datalist id="skills">
+            <% skillsArr.forEach(function(skill){ %>
+              <option value="<%=skill%>"><%=skill%></p>
+            <% });%>
+          </datalist>
+
+        <button class="btn btn-default btn-outline-primary" type="submit" name="button">Add Skill</button>
+      </form>
+    </div>
+
+
+
+
+
+  </div>
+
+
+</div>
+
+<script type="text/javascript">
+  function addBio() {
+    //hide add bio button
+    document.querySelector('#addbiobtn').style.display = "none";
+    //show textarea and submit bio button
+    document.querySelector('#bioformAdd').style.display = "block";
+  }
+
+  function updateBio() {
+    //hide add bio button and bio text
+    document.querySelector('.bioInitial').style.display = "none";
+    //show textarea with previous value and submit bio button
+    document.querySelector('.bioUpdate').bioForm.style.display = "block";
+  }
+
+  function addWork() {
+    //hide add bio button
+    document.querySelector('#addworkbtn').style.display = "none";
+    //show textarea and submit bio button
+    document.querySelector('#workformAdd').style.display = "block";
+  }
+
+  function updateWork() {
+    //hide add bio button and bio text
+    document.querySelector('.workInitial').style.display = "none";
+    //show textarea with previous value and submit bio button
+    document.querySelector('.workUpdate').style.display = "block";
+  }
+
+  function addEducation() {
+    //hide add bio button
+    document.querySelector('#addeducationbtn').style.display = "none";
+    //show textarea and submit bio button
+    document.querySelector('#educationformAdd').style.display = "block";
+  }
+
+  function updateEducation() {
+    //hide add bio button and bio text
+    document.querySelector('.educationInitial').style.display = "none";
+    //show textarea with previous value and submit bio button
+    document.querySelector('.educationUpdate').style.display = "block";
+  }
+
+  function addCompany() {
+    //hide add bio button
+    document.querySelector('#addcompanybtn').style.display = "none";
+    //show textarea and submit bio button
+    document.querySelector('#companyformAdd').style.display = "block";
+  }
+
+  function updateCompany() {
+    //hide add bio button and bio text
+    document.querySelector('.companyInitial').style.display = "none";
+    //show textarea with previous value and submit bio button
+    document.querySelector('.companyUpdate').style.display = "block";
+  }
+</script>
+
+<% include partials/footer.ejs %>

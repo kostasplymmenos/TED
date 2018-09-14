@@ -32,6 +32,7 @@ router.post('/login', function(req, res, next) {
         return res.redirect('/admin/' + user._id);
       //else is normal user
       console.log("[INFO] User logged in: " + req.session.Auth.email);
+      console.log(user);
       return res.redirect('/home/' + user._id);
     });
   })(req, res, next);

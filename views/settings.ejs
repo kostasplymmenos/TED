@@ -34,11 +34,11 @@
   <form action="/settings/<%=user._id%>/password?_method=PUT" method="post">
     <div class="form-group">
       <label for="formGroupExampleInput">New Password:</label>
-      <input type="text" class="form-control" id="formGroupExampleInput" placeholder="">
+      <input name="newpass" type="password" class="form-control" id="formGroupExampleInput" placeholder="">
     </div>
     <div class="form-group">
       <label for="formGroupExampleInput2">Confirm Password:</label>
-      <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="">
+      <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="">
     </div>
     <button class="btn btn-default btn-outline-primary"type="submit" name="button">Change Password</button>
   </form>

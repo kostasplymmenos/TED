@@ -9,7 +9,8 @@ var router = express.Router();
 router.use(bodyParser.urlencoded({extended: true}));
 
 //user's home page with his news feed
-router.get("/home/:id",middleware.isLoggedIn,middleware.userAccess,function(req,res){
+router.get("/home/:id",middleware.isLoggedIn,function(req,res){
+  console.log("MPHKEEE");
   //find all posts with author the auth user or his friends then populate them
   Post.find({$or: [
     { author : req.session.Auth._id},

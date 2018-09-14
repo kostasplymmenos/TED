@@ -35,4 +35,18 @@ var UserSchema = new mongoose.Schema({
 });
 UserSchema.plugin(passportLocalMongoose,{usernameField:"email"});
 
+UserSchema.statics.serializeUser = function() {
+    return function(user, cb) {
+        cb(null, user.id);
+    }
+};
+
+UserSchema.statics.deserializeUser = function() {
+    var self = this;
+
+    return function(id, cb) {
+        self.findOne({_id: id}, cb);
+    }
+};
+
 module.exports = mongoose.model("User", UserSchema);

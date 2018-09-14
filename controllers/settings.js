@@ -10,27 +10,49 @@ var passport              = require('passport');
 
 router.use(bodyParser.urlencoded({extended: true}));
 
-router.get("/settings/:id",middleware.isLoggedIn,middleware.userAccess,function(req,res){
+router.get("/settings/:id",middleware.isLoggedIn,function(req,res){
   res.render("settings.ejs",{user: req.session.Auth});
 });
 
-router.put("/settings/:id/email",middleware.isLoggedIn,middleware.userAccess,function(req,res,next){
+router.put("/settings/:id/email",middleware.isLoggedIn,function(req,res,next){
   //TODO change email to database when user logs out -- Passport Hell with authentication
-  res.render("settings.ejs",{user: req.session.Auth});
+  User.findOne({_id: req.session.Auth._id},function(err,foundUser){
+    if (foundUser){
+      req.session.Auth.email = req.body.newEmail;
+      foundUser.set("email",req.body.newEmail);
+      foundUser.save();
+      return res.redirect("/settings/"+req.session.Auth._id);
+
+    }
+    else
+      return res.status(500).json({message: 'This user does not exist'});
+
+  });
 });
 
-router.put("/settings/:id/telephone",middleware.isLoggedIn,middleware.userAccess,function(req,res){
+router.put("/settings/:id/telephone",middleware.isLoggedIn,function(req,res){
   User.findOneAndUpdate({_id: req.params.id},
     {$set: {telephone: req.body.newTel}},
     {new: true},
     function(err,user) {
       req.session.Auth = user;
-      res.render("settings.ejs",{user: req.session.Auth});
+      return res.redirect("/settings/"+req.session.Auth._id);
     });
 });
 
-router.put("/settings/:id/password",middleware.isLoggedIn,middleware.userAccess,function(req,res){
-  res.render("settings.ejs",{user: req.session.Auth});
+router.put("/settings/:id/password",middleware.isLoggedIn,function(req,res){
+  User.findOne({_id: req.session.Auth._id},function(err,foundUser){
+    if (foundUser){
+      foundUser.setPassword(req.body.newpass, function(){
+        foundUser.save();
+        return res.redirect("/settings/"+req.session.Auth._id);
+      });
+    }
+    else
+      return res.status(500).json({message: 'This user does not exist'});
+
+  });
+
 });
 
 module.exports = router;
