@@ -9,15 +9,13 @@ var UserSchema = new mongoose.Schema({
     firstname: String,
     lastname : String,
     birthdate: Date,
-    image    : {type: String, default: "/default_profile.jpg"},
+    image    : { type: String, default: "/default_profile.jpg"},
     telephone: String,
-    education: String,
-    skills   : [{
-        type: String
-    }],
-    bio      : String,
-    workPosition : String,
-    company  : String,
+    education: { text: String, isPrivate: {type: Boolean, default: true}},
+    skills   : { skillsArray: [ {type: String} ], isPrivate: {type: Boolean, default: true}},
+    bio      : { text: String, isPrivate: {type: Boolean, default: true}},
+    workPosition : { text: String, isPrivate: {type: Boolean, default: true}},
+    company  : { text: String, isPrivate: {type: Boolean, default: true}},
     isAdmin  : {type: Boolean, default: false},
     friendRequestsSent : [{
       type: Schema.Types.ObjectId, ref: "User"
@@ -37,7 +35,7 @@ UserSchema.plugin(passportLocalMongoose,{usernameField:"email"});
 
 UserSchema.statics.serializeUser = function() {
     return function(user, cb) {
-        cb(null, user.id);
+        cb(null, user._id);
     }
 };
 

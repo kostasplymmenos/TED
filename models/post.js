@@ -5,8 +5,7 @@ var Schema = mongoose.Schema;
 var PostSchema = new mongoose.Schema({
   author: {type: Schema.Types.ObjectId, ref: "User"},
   text  : String,
-  image : String,
-  video : String,
+  media : {content: String, mediatype: String},
   likes : [{
     type: Schema.Types.ObjectId, ref: "User"
   }],

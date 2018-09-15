@@ -9,7 +9,13 @@ var router = express.Router();
 router.use(bodyParser.urlencoded({extended: true}));
 
 router.get("/discussions/:id",middleware.isLoggedIn,middleware.userAccess,function(req,res){
-  res.redirect("/discussions/" + req.session.Auth._id + "/chat/" + req.session.Auth.chats.reverse()[0].userId);
+  //find and show the last chats
+  //if no chats show no Chats
+  if(req.session.Auth.chats.length != 0)
+    return res.redirect("/discussions/" + req.session.Auth._id + "/chat/" + req.session.Auth.chats.reverse()[0].userId);
+  else {
+    return res.send("No chats");
+  }
 });
 
 //when user clicks to chat with user id2

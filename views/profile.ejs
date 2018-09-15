@@ -26,58 +26,39 @@
   <div class="list-group-item" style="text-align:center">
     <h4>Professional Information</h4>
   </div>
-  <div style="margin:10px">
+  <div style="margin:20px">
 
-    <div class="list-group-item">
-      <% if(showUser.bio) { %>
-        <p><%=showUser.bio%></p>
-        <button class="btn btn-default btn-outline-primary"type="submit" name="button">Update Bio</button>
-      <% }else{ %>
-        <a href="#">
-          <button class="btn btn-default btn-outline-primary"type="submit" name="button">Add Bio</button>
-        </a>
-      <% } %>
-    </div>
-    <div class="list-group-item">
-    <% if(showUser.workPosition) { %>
-      <p><%=showUser.workPosition%></p>
-      <button class="btn btn-default btn-outline-primary"type="submit" name="button">Update Work Position</button>
-    <% }else{ %>
-      <a href="#">
-        <button class="btn btn-default btn-outline-primary"type="submit" name="button">Add Work Position</button>
-      </a>
-    <% } %>
-    </div>
+    <% if((showUser.bio.text && !showUser.bio.isPrivate) || showPrivate) { %>
       <div class="list-group-item">
-    <% if(showUser.company) { %>
-      <p><%=showUser.company%></p>
-      <button class="btn btn-default btn-outline-primary"type="submit" name="button">Update Company</button>
-    <% }else{ %>
-      <a href="#">
-        <button class="btn btn-default btn-outline-primary"type="submit" name="button">Add Company</button>
-      </a>
+          <p>Bio: <%=showUser.bio.text%></p>
+      </div>
     <% } %>
-    </div>
-    <div class="list-group-item">
-    <% if(showUser.education) { %>
-      <p><%=showUser.education%></p>
-      <button class="btn btn-default btn-outline-primary"type="submit" name="button">Update Education</button>
-    <% }else{ %>
-      <a href="#">
-        <button class="btn btn-default btn-outline-primary"type="submit" name="button">Add Education</button>
-      </a>
+
+    <% if((showUser.workPosition.text && !showUser.workPosition.isPrivate) || showPrivate) { %>
+      <div class="list-group-item">
+          <p>Work Position: <%=showUser.workPosition.text%></p>
+      </div>
     <% } %>
-    </div>
-    <div class="list-group-item">
-    <% if(showUser.skills.length != 0) { %>
-      <p><%=showUser.skills%></p>
-      <button class="btn btn-default btn-outline-primary"type="submit" name="button">Update Skills</button>
-    <% }else{ %>
-      <a href="#">
-        <button class="btn btn-default btn-outline-primary"type="submit" name="button">Add Skills</button>
-      </a>
+
+    <% if((showUser.company.text && !showUser.company.isPrivate) || showPrivate) { %>
+      <div class="list-group-item">
+          <p>Company: <%=showUser.company.text%></p>
+      </div>
     <% } %>
-    </div>
+
+    <% if((showUser.education.text && !showUser.education.isPrivate) || showPrivate) { %>
+      <div class="list-group-item">
+          <p>Education: <%=showUser.education.text%></p>
+      </div>
+    <% } %>
+
+    <% if(showUser.skills.skillsArray.length != 0) { %>
+      <div class="list-group-item">
+
+        <p><%=showUser.skills%></p>
+      </div>
+    <% } %>
+
   </div>
 
 

@@ -8,24 +8,40 @@
     <div class="container"  >
       <img style="display:table;margin-left:auto;margin-right:auto; margin-top:10px; width:240px; height:240px;" src="<%= user.image %>" alt="">
     </div>
-    <div class="container" style="text-align: center;margin:20px auto;background-color: white" >
-      <p><%= user.firstname %> <%= user.lastname %></p>
+    <div class="container" style="text-align: center;margin:30px auto;background-color: white" >
+      <h4><%= user.firstname %> <%= user.lastname %></h4>
     </div>
-    <div class="container" style="text-align: center;margin:20px auto;background-color:white" >
-      <p><%= user.email%></p>
+
+    <%if(user.bio.text){%>
+    <div class="container" style="text-align: center;margin:10px auto;background-color:white" >
+      <p><%= user.bio.text%></p>
     </div>
-    <div class="container" style="text-align: center;margin:20px auto;background-color:white" >
-      <p>Personal Details</p>
+    <%}%>
+
+    <%if(user.workPosition.text){%>
+    <div class="container" style="text-align: center;margin:10px auto;background-color:white" >
+      <p><%= user.workPosition.text%></p>
     </div>
-    <div class="container" style="text-align: center;margin:20px auto;background-color:white" >
-      <p>Personal Details</p>
+    <%}%>
+    <%if(user.company.text){%>
+    <div class="container" style="text-align: center;margin:10px auto;background-color:white" >
+      <p>@ <%= user.company.text%></p>
     </div>
-    <div class="container" style="text-align: center;margin:20px auto;background-color:white" >
-      <p>Personal Details</p>
+    <%}%>
+    <%if(user.education.text){%>
+    <div class="container" style="text-align: center;margin:10px auto;background-color:white" >
+      <p><%= user.education.text%></p>
     </div>
-    <div class="container" style="text-align: center;margin:20px auto;background-color:white" >
-      <p>Personal Details</p>
+    <%}%>
+
+    <%if(user.friends.length != 0){%>
+    <div class="container" style="text-align: center;margin:10px auto;background-color:white" >
+      <p>Connections: <%= user.friends.length%></p>
     </div>
+    <%}%>
+
+
+
 
   </div>
 
@@ -35,14 +51,14 @@
       <h5>Welcome Back, <%= user.firstname %> <%= user.lastname %></h5>
     </div>
     <div style="" class="container">
-        <form class="form-group" style="margin:20px" action="/home/<%=user._id%>" method="post">
+        <form ref="uploadForm2" id="uploadForm2" encType="multipart/form-data" class="form-group" style="margin:20px" action="/home/<%=user._id%>" method="post">
           <textarea id="txtarea" style="resize:none;margin:0 auto" name="postarea"rows="3" cols="100" placeholder="What are you thinking?"></textarea>
-
-          <label for="picLabel">Upload an Image</label>
-          <input id="picLabel" type="file" name="pic" accept="image/*"> <br>
+          <label for="mediaLabel">Upload an Image or Video</label>
+          <input id="mediaLabel" type="file" name="p_media"> <br>
           <input type="submit" value="Post">
         </form>
     </div>
+
     <!--  The posts starts here -->
     <div class="list-group" style="margin:10px">
       <% posts.sort().reverse().forEach(function(post){ %>
@@ -56,11 +72,22 @@
             </span>
             <%=post.author.firstname%> <%=post.author.lastname%>
           </a>
+          <hr>
           <p><%=post.text%></p>
-          <img src="<%=post.image%>" alt="">
+
+          <!-- post media -->
+          <%if(post.media.mediatype.toString() == "image/jpeg"){%>
+            <img src="<%= post.media.content %>" height="480" width="480" alt="">
+          <%}else if(post.media.mediatype.toString() == "video/mp4"){%>
+            <video controls width="480" height="480">
+              <source src="<%= post.media.content %>" type="video/mp4">
+            </video>
+          <%}%>
+          <hr>
           <a href="/home/like/<%=post._id%>?_method=PUT">
             <button class="btn btn-default btn-success"type="submit" name="button">Like</button>
           </a>
+
           Likes: <%=post.likes.length%>
           <p>Comment1</p>
           <p>Comment2</p>

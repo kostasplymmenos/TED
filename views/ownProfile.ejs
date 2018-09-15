@@ -22,14 +22,22 @@
   <div style="margin:10px">
 
     <div class="list-group-item">
-      <% if(showUser.bio) { %>
+      <% if(showUser.bio.text) { %>
         <div class="bioInitial">
-          <p><%=showUser.bio%></p>
+          <p><%=showUser.bio.text%></p>
           <button class="btn btn-default btn-outline-primary" type="submit" onclick="updateBio();">Update Bio</button>
         </div>
 
         <form class="form-inline bioUpdate" style="display:none;"action="/profile/update/bio?_method=PUT" method="post">
-          <textarea name="info" rows="3" cols="80"> <%= showUser.bio%></textarea>
+          <textarea name="info" rows="3" cols="80"> <%= showUser.bio.text%></textarea>
+          <div class="form-check">
+            <%if(showUser.bio.isPrivate){%>
+              <input checked type="checkbox" name="privateCheckbox"class="form-check-input" id="privateCheck">
+            <%}else{%>
+              <input type="checkbox" name="privateCheckbox"class="form-check-input" id="privateCheck">
+            <%}%>
+            <label class="form-check-label" for="privateCheck">Private</label>
+          </div>
           <button class="btn btn-default btn-outline-primary"type="submit" name="button">Submit Bio</button>
         </form>
 
@@ -44,14 +52,22 @@
 
 
     <div class="list-group-item">
-      <% if(showUser.workPosition) { %>
+      <% if(showUser.workPosition.text) { %>
         <div class="workInitial">
-          <p><%=showUser.workPosition%></p>
+          <p><%=showUser.workPosition.text%></p>
           <button class="btn btn-default btn-outline-primary" type="submit" onclick="updateWork();">Update Work Position</button>
         </div>
 
         <form class="form-inline workUpdate" style="display:none;"action="/profile/update/work?_method=PUT" method="post">
-          <textarea name="info" rows="3" cols="80"> <%= showUser.workPosition%></textarea>
+          <textarea name="info" rows="3" cols="80"> <%= showUser.workPosition.text%></textarea>
+          <div class="form-check">
+            <%if(showUser.workPosition.isPrivate){%>
+              <input checked type="checkbox" name="privateCheckbox"class="form-check-input" id="privateCheck">
+            <%}else{%>
+              <input type="checkbox" name="privateCheckbox"class="form-check-input" id="privateCheck">
+            <%}%>
+            <label class="form-check-label" for="privateCheck">Private</label>
+          </div>
           <button class="btn btn-default btn-outline-primary"type="submit" name="button">Submit Position</button>
         </form>
 
@@ -67,14 +83,22 @@
 
 
     <div class="list-group-item">
-      <% if(showUser.education) { %>
+      <% if(showUser.education.text) { %>
         <div class="educationInitial">
-          <p><%=showUser.education%></p>
+          <p><%=showUser.education.text%></p>
           <button class="btn btn-default btn-outline-primary" type="submit" onclick="updateEducation();">Update Education</button>
         </div>
 
         <form class="form-inline educationUpdate" style="display:none;"action="/profile/update/education?_method=PUT" method="post">
-          <textarea name="info" rows="3" cols="80"> <%= showUser.education%></textarea>
+          <textarea class="form-group" name="info" rows="3" cols="80"> <%= showUser.education.text%></textarea>
+          <div class="form-check">
+            <%if(showUser.education.isPrivate){%>
+              <input checked type="checkbox" name="privateCheckbox"class="form-check-input" id="privateCheck">
+            <%}else{%>
+              <input type="checkbox" name="privateCheckbox"class="form-check-input" id="privateCheck">
+            <%}%>
+            <label class="form-check-label" for="privateCheck">Private</label>
+          </div>
           <button class="btn btn-default btn-outline-primary"type="submit" name="button">Submit Education</button>
         </form>
 
@@ -88,14 +112,22 @@
     </div>
 
     <div class="list-group-item">
-      <% if(showUser.company) { %>
+      <% if(showUser.company.text) { %>
         <div class="companyInitial">
-          <p><%=showUser.company%></p>
+          <p><%=showUser.company.text%></p>
           <button class="btn btn-default btn-outline-primary" type="submit" onclick="updateCompany();">Update Company</button>
         </div>
 
         <form class="form-inline companyUpdate" style="display:none;"action="/profile/update/company?_method=PUT" method="post">
-          <textarea name="info" rows="3" cols="80"> <%= showUser.company%></textarea>
+          <textarea name="info" rows="3" cols="80"> <%= showUser.company.text%></textarea>
+          <div class="form-check">
+            <%if(showUser.company.isPrivate){%>
+              <input checked type="checkbox" name="privateCheckbox"class="form-check-input" id="privateCheck">
+            <%}else{%>
+              <input type="checkbox" name="privateCheckbox"class="form-check-input" id="privateCheck">
+            <%}%>
+            <label class="form-check-label" for="privateCheck">Private</label>
+          </div>
           <button class="btn btn-default btn-outline-primary"type="submit" name="button">Submit Company</button>
         </form>
 
@@ -108,7 +140,7 @@
       <% } %>
     </div>
     <div class="list-group-item">
-      <% showUser.skills.forEach(function(skill){ %>
+      <% showUser.skills.skillsArray.forEach(function(skill){ %>
         <p><%=skill%></p>
       <% });%>
 
@@ -135,6 +167,7 @@
 </div>
 
 <script type="text/javascript">
+
   function addBio() {
     //hide add bio button
     document.querySelector('#addbiobtn').style.display = "none";
@@ -146,7 +179,7 @@
     //hide add bio button and bio text
     document.querySelector('.bioInitial').style.display = "none";
     //show textarea with previous value and submit bio button
-    document.querySelector('.bioUpdate').bioForm.style.display = "block";
+    document.querySelector('.bioUpdate').style.display = "block";
   }
 
   function addWork() {

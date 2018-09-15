@@ -69,24 +69,26 @@ router.post("/register", function(req, res){
   var newUser = new User({email     : req.body.username,
                           firstname : req.body.firstname,
                           lastname  : req.body.lastname,
-                          birthdate : req.body.birthdate,
-                          image     : "/image_uploads/"+req.body.firstname+".jpg"
+                          birthdate : req.body.birthdate
   });
+  if(req.files.pic)
+      newUser.image = "/profile_images/"+newUser._id+".jpg";
 
   console.log("image : "+newUser.image);
 
   //register new user to users collection (via mongoose)
   User.register(newUser, req.body.password, function(err, user){
     if(err)
-      return res.render("index.ejs", {error: "Register Failed. Email already exists"});
+      return res.render("index.ejs", {error: "Register Failed"+ err});
     else{
       //download image to server (if any was uploaded)
-      if (req.files)
-        req.files.pic.mv(__dirname+"/../assets/image_uploads/"+req.body.firstname+".jpg", function(err) {
-         if (err)
-           return res.status(500).send(err);
-         console.log("Uploaded image successfully!\n")
-       });
+      if(req.files.pic){
+        req.files.pic.mv(__dirname+"/../user_data/profile_images/"+user._id+".jpg", function(err) {
+          if(err)
+            return res.status(500).send(err);
+          console.log("Uploaded image successfully!\n")
+        });
+      }
 
       //log in the new user
       passport.authenticate("local")(req, res, function(err){

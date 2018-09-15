@@ -32,7 +32,7 @@ router.get("/profile/:id",middleware.isLoggedIn,function(req,res){
         return res.render("profile.ejs",{user: req.session.Auth, showUser: foundUser, showPrivate: true});
 
       //check if the user requested is friends with the user that made the request(Auth user)
-      var result = foundUser.friends.find(req.session.Auth._id);
+      var result = foundUser.friends.includes(req.session.Auth._id);
       if(!result) //if users are not friends, show public profile
         return res.render("profile.ejs",{user: req.session.Auth, showUser: foundUser, showPrivate: false});
       else{ //if users ARE friends, show private profile
@@ -51,8 +51,12 @@ router.put("/profile/update/:field",middleware.isLoggedIn,function(req,res){
   var field = req.params.field;
   //console.log(req.body.info);
   if(field == "bio"){
+    var checked = false;
+    if(req.body.privateCheckbox)
+      checked = true;
+
     User.findOneAndUpdate({_id: req.session.Auth._id},
-      {$set: {bio: req.body.info}},
+      {$set: {"bio.text" : req.body.info,"bio.isPrivate" : checked}},
       {new: true},
       function(err,updatedUser){
         if(err) return res.send(err);
@@ -62,8 +66,12 @@ router.put("/profile/update/:field",middleware.isLoggedIn,function(req,res){
       });
   }
   else if(field == "work") {
+    var checked = false;
+    if(req.body.privateCheckbox)
+      checked = true;
+
     User.findOneAndUpdate({_id: req.session.Auth._id},
-      {$set: {workPosition: req.body.info}},
+      {$set: {"workPosition.text" : req.body.info,"workPosition.isPrivate" : checked}},
       {new: true},
       function(err,updatedUser){
         if(err) return res.send(err);
@@ -73,8 +81,12 @@ router.put("/profile/update/:field",middleware.isLoggedIn,function(req,res){
       });
   }
   else if(field == "education") {
+    var checked = false;
+    if(req.body.privateCheckbox)
+      checked = true;
+
     User.findOneAndUpdate({_id: req.session.Auth._id},
-      {$set: {education: req.body.info}},
+      {$set: {"education.text" : req.body.info,"education.isPrivate" : checked}},
       {new: true},
       function(err,updatedUser){
         if(err) return res.send(err);
@@ -84,8 +96,11 @@ router.put("/profile/update/:field",middleware.isLoggedIn,function(req,res){
       });
   }
   else if(field == "company") {
+    var checked = false;
+    if(req.body.privateCheckbox)
+      checked = true;
     User.findOneAndUpdate({_id: req.session.Auth._id},
-      {$set: {company: req.body.info}},
+      {$set: {"company.text" : req.body.info,"company.isPrivate" : checked}},
       {new: true},
       function(err,updatedUser){
         if(err) return res.send(err);
@@ -95,6 +110,10 @@ router.put("/profile/update/:field",middleware.isLoggedIn,function(req,res){
       });
   }
   else if(field == "skills") {
+    var checked = false;
+    if(req.body.privateCheckbox)
+      checked = true;
+
     console.log(req.body);
     User.findOneAndUpdate({_id: req.session.Auth._id},
       {$push: {skills: req.body.selectedSkill}},

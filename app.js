@@ -36,6 +36,8 @@ mongoose.connect("mongodb://localhost/connectedin_db", { useNewUrlParser: true }
 
 //uses
 app.use(express.static(__dirname + '/assets/'));
+app.use(express.static(__dirname + '/user_data/'));
+
 app.use(require('cookie-parser')());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());

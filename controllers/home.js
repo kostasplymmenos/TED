@@ -5,8 +5,11 @@ var User       = require('./../models/user.js');
 var Post       = require('./../models/post.js');
 var middleware = require("./../helpers/auth_middleware.js");
 
+
+
 var router = express.Router();
 router.use(bodyParser.urlencoded({extended: true}));
+
 
 //user's home page with his news feed
 router.get("/home/:id",middleware.isLoggedIn,function(req,res){
@@ -23,13 +26,26 @@ router.get("/home/:id",middleware.isLoggedIn,function(req,res){
 });
 
 //user makes new post
-router.post("/home/:id",middleware.isLoggedIn,middleware.userAccess,function(req,res){
+router.post("/home/:id",middleware.isLoggedIn,function(req,res){
   var newPost = new Post({
     author: req.session.Auth._id,
     text: req.body.postarea,
     likes: [],
     comments: []
   });
+
+  if(req.files.p_media){
+
+    var fileType = req.files.p_media.name.split(".").pop();
+    console.log(fileType);
+    newPost.media.content = "/post_media/"+ newPost._id + "." + fileType;
+    newPost.media.mediatype = req.files.p_media.mimetype;
+    req.files.p_media.mv(__dirname + "/../user_data/post_media/"  +newPost._id + "." + fileType, function(err) {
+      if(err)
+        return res.status(500).send(err);
+      console.log("Uploaded media successfully!\n")
+    });
+  }
   //save new post to database and redirect to get method to load the new post
   //TODO: dont redirect but load div with jquery
   Post.collection.save(newPost,function(err,doc){
