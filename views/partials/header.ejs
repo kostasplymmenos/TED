@@ -13,16 +13,16 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
     </button>
-      <a class="navbar-brand" href="/home/<%= user._id%>">
+      <a class="navbar-brand" href="/home">
         <img src="/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""><span style="margin:0;padding:0">onnectedIn</span>
       </a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-           <a class="nav-link" href="/home/<%=user._id %>">Home</a>
+           <a class="nav-link" href="/home">Home</a>
          </li>
          <li class="nav-item">
-           <a class="nav-link" href="/network/<%=user._id %>">Network</a>
+           <a class="nav-link" href="/network">Network</a>
          </li>
          <li class="nav-item">
            <a class="nav-link" href="/jobs">Jobs</a>
@@ -31,7 +31,7 @@
            <a class="nav-link" href="/discussions/<%=user._id %>">Discussion</a>
          </li>
          <li class="nav-item">
-           <a class="nav-link" href="/notifications/<%=user._id %>">Notifications<span class="badge badge-danger"><%= user.friendRequestsPending.length%></span></a>
+           <a class="nav-link" href="/notifications">Notifications<span class="badge badge-danger"><%= user.friendRequestsPending.length + user.notifications.length%></span></a>
          </li>
          <li class="nav-item">
            <a class="nav-link" href="/profile">Profile</a>

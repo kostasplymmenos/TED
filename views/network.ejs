@@ -5,7 +5,7 @@
       <div class="list-group-item" style="text-align:center">
         <h4>Connected Users</h4>
       </div>
-  
+
 
         <div class="row" style="margin:15px">
           <% friends.forEach(function(fr){ %>
@@ -50,7 +50,7 @@
                     </a>
                     <p class="card-text">Description</p>
                     <p class="card-text">Work Experience</p>
-                    <form action="/network/<%=user._id%>/new/<%=nuser._id%>" method="post">
+                    <form action="/network/new/<%=nuser._id%>" method="post">
                       <button id="Add" class="btn btn-default btn-outline-primary" type="submit" name="button">Add to Network</button>
                     </form>
                   </div>

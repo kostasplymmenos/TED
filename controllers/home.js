@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 var mongoose   = require("mongoose");
 var User       = require('./../models/user.js');
 var Post       = require('./../models/post.js');
+var Comment    = require('./../models/comment.js');
 var middleware = require("./../helpers/auth_middleware.js");
 
 
@@ -10,23 +11,36 @@ var middleware = require("./../helpers/auth_middleware.js");
 var router = express.Router();
 router.use(bodyParser.urlencoded({extended: true}));
 
-
 //user's home page with his news feed
-router.get("/home/:id",middleware.isLoggedIn,function(req,res){
-  console.log("MPHKEEE");
+router.get("/home",middleware.isLoggedIn,function(req,res){
   //find all posts with author the auth user or his friends then populate them
   Post.find({$or: [
-    { author : req.session.Auth._id},
-    { author : { $in : req.session.Auth.friends}}
-  ]}).populate("author")
+    { author : req.session.Auth._id}, //auth's posts
+    { author : { $in : req.session.Auth.friends}} //auth's friends' posts
+  ]})
+  .populate("author comments")
+  .populate({
+    path: 'comments',
+    populate: {
+      path: 'user',
+      model: 'User'
+    }
+  })
   .exec(function(err,postsPopulated){
     if(err) return res.send(err);
     res.render("home.ejs",{user: req.session.Auth, posts: postsPopulated});
   });
 });
 
+// .populate({
+//      path: 'pages',
+//      populate: {
+//        path: 'components',
+//        model: 'Component'
+//      }
+//   })
 //user makes new post
-router.post("/home/:id",middleware.isLoggedIn,function(req,res){
+router.post("/home",middleware.isLoggedIn,function(req,res){
   var newPost = new Post({
     author: req.session.Auth._id,
     text: req.body.postarea,
@@ -51,13 +65,52 @@ router.post("/home/:id",middleware.isLoggedIn,function(req,res){
   Post.collection.save(newPost,function(err,doc){
     if(err) res.send(err);
     else
-      res.redirect("/home/"+req.session.Auth._id);
+      res.redirect("/home");
   });
 });
 
 //user likes a post
-router.put("/home/like/:postid",middleware.isLoggedIn,middleware.userAccess,function (req,res) {
-  res.redirect("/home/"+req.session.Auth._id);
+router.put("/home/like/:postid",middleware.isLoggedIn,function (req,res){
+  Post.findOneAndUpdate({_id : req.params.postid},
+                        // { $switch: {
+                        //     branches: [
+                        //       {case: {$nin : {likes: req.session.Auth._id }}, then: {$push: {likes:req.session.Auth._id}}},
+                        //       {case: {$in : {likes: req.session.Auth._id }}, then: {$pull: {likes:req.session.Auth._id}}},
+                        //     ]
+                        //   }
+                        // },
+                        {$addToSet: {likes: req.session.Auth._id}},
+                        function(err){
+                          if(err) res.send(err);
+                          res.redirect("/home");
+                        });
+
+
+});
+
+//user comments a post
+router.post("/home/comment/:postid",middleware.isLoggedIn,function (req,res) {
+  //create new comment
+  var newComment = new Comment({
+    user: req.session.Auth._id,
+    content: req.body.commentInput
+  });
+
+  //save new comment in database
+  Comment.collection.save(newComment,function(err,doc){
+    if(err) res.send(err);
+    //update post's comments
+    Post.findOneAndUpdate(
+      {_id : req.params.postid},
+      {$push : {comments : newComment._id}},
+      {new: true},
+      function(err, updated){
+        if(err) res.send(err);
+        //redirect again to home
+        res.redirect("/home");
+      }
+    );
+  });
 });
 
 module.exports = router;

@@ -33,7 +33,7 @@ router.post('/login', function(req, res, next) {
       //else is normal user
       console.log("[INFO] User logged in: " + req.session.Auth.email);
       console.log(user);
-      return res.redirect('/home/' + user._id);
+      return res.redirect('/home');
     });
   })(req, res, next);
 });
@@ -64,12 +64,12 @@ router.post("/register", function(req, res){
   if(req.body.password != req.body.passwordCheck)
     return res.render("register.ejs", {error: "Password don't match"});
 
-
   //create new user from request's form
   var newUser = new User({email     : req.body.username,
                           firstname : req.body.firstname,
                           lastname  : req.body.lastname,
-                          birthdate : req.body.birthdate
+                          birthdate : req.body.bdate,
+                          telephone : req.body.tel
   });
   if(req.files.pic)
       newUser.image = "/profile_images/"+newUser._id+".jpg";
@@ -97,7 +97,7 @@ router.post("/register", function(req, res){
         req.session.Auth = user;
         //redirect to logged user's home page
         console.log("[INFO] User Registered Succesfully: " + req.session.Auth.email);
-        res.redirect("home/" + user._id);
+        res.redirect("home");
       });
     }
   });

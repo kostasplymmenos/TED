@@ -51,7 +51,7 @@
       <h5>Welcome Back, <%= user.firstname %> <%= user.lastname %></h5>
     </div>
     <div style="" class="container">
-        <form ref="uploadForm2" id="uploadForm2" encType="multipart/form-data" class="form-group" style="margin:20px" action="/home/<%=user._id%>" method="post">
+        <form ref="uploadForm2" id="uploadForm2" encType="multipart/form-data" class="form-group" style="margin:20px" action="/home" method="post">
           <textarea id="txtarea" style="resize:none;margin:0 auto" name="postarea"rows="3" cols="100" placeholder="What are you thinking?"></textarea>
           <label for="mediaLabel">Upload an Image or Video</label>
           <input id="mediaLabel" type="file" name="p_media"> <br>
@@ -61,7 +61,7 @@
 
     <!--  The posts starts here -->
     <div class="list-group" style="margin:10px">
-      <% posts.sort().reverse().forEach(function(post){ %>
+      <% posts.reverse().forEach(function(post){ %>
         <div class="list-group-item list-group-item">
           <span style="float:right">
             <%=post.date.toLocaleString()%>
@@ -76,34 +76,53 @@
           <p><%=post.text%></p>
 
           <!-- post media -->
-          <%if(post.media.mediatype.toString() == "image/jpeg"){%>
-            <img src="<%= post.media.content %>" height="480" width="480" alt="">
-          <%}else if(post.media.mediatype.toString() == "video/mp4"){%>
-            <video controls width="480" height="480">
-              <source src="<%= post.media.content %>" type="video/mp4">
-            </video>
+          <%if(post.media){%>
+            <%if(post.media.mediatype == "image/jpeg"){%>
+              <img src="<%= post.media.content %>" height="480" width="480" alt="">
+            <%}else if(post.media.mediatype == "video/mp4"){%>
+              <video controls width="480" height="480">
+                <source src="<%= post.media.content %>" type="video/mp4">
+              </video>
+            <%}%>
           <%}%>
           <hr>
-          <a href="/home/like/<%=post._id%>?_method=PUT">
-            <button class="btn btn-default btn-success"type="submit" name="button">Like</button>
-          </a>
-
-          Likes: <%=post.likes.length%>
-          <p>Comment1</p>
-          <p>Comment2</p>
-
-          <form class="" action="#" method="post">
-            <input type="text" name="" value="" placeholder="Make a comment">
-            <input type="submit" name="" value="Comment">
+          <form class="" action="/home/like/<%=post._id%>?_method=PUT" method="post">
+            <button class="btn btn-default btn-outline-success"type="submit" name="button">Like</button>
           </form>
+
+
+
+          <p>Likes: <%=post.likes.length%></p>
+
+          <div class="commentSection">
+            <div class="list-group">
+              <% post.comments.forEach(function(comment){%>
+                <div style="background-color:#f8f8f8"class="list-group-item">
+                  <span class="pull-left ">
+                       <img src="<%=comment.user.image%>" width="32" height="32" class=" img-rounded" />
+                  </span>
+                  <span><%=comment.user.firstname%> <%=comment.user.lastname%></span> <span style="float:right"><%=comment.date.toLocaleString()%></span>
+                  <br><%=comment.content%>
+                </div>
+              <%});%>
+            </div>
+            <form style="margin-top:10px"class="form-inline" action="/home/comment/<%= post._id%>" method="post">
+              <input class="form-control" type="text" name="commentInput" value="" placeholder="Make a comment">
+              <input style="margin-left:5px" class="btn btn-default btn-outline-primary"type="submit" name="" value="Comment">
+            </form>
+          </div>
+
+
         </div>
+        <hr>
       <% });%>
+
 
     </div>
   </div>
 </div>
 
   <script type="text/javascript">
-    //alert("conn");
+
   </script>
 <% include partials/footer.ejs %>

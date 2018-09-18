@@ -12,17 +12,17 @@
               <%}%>
             <% friendreq.forEach(function(freq){ %>
               <div class="list-group-item list-group-item-action">
-                <a href="/default_profile.jpg">
+                <a href="/profile/<%=freq._id%>">
                   <span class="pull-left ">
-                       <img src="/default_profile.jpg" width="48" height="48" class=" img-rounded" />
+                       <img src="<%=freq.image%>" width="48" height="48" class=" img-rounded" />
                   </span>
                   <%= freq.firstname %> <%= freq.lastname %>
                 </a>
 
-                <form style="float:right;margin:5px" action="/network/<%= user._id %>/decline/<%= freq._id %>?_method=PUT" method="post">
+                <form style="float:right;margin:5px" action="/network/decline/<%= freq._id %>?_method=PUT" method="post">
                   <button class="btn btn-default btn-outline-danger"  type="submit" name="button">Decline</button>
                 </form>
-                <form style="float:right;margin:5px" action="/network/<%= user._id %>/accept/<%= freq._id %>?_method=PUT" method="post">
+                <form style="float:right;margin:5px" action="/network/accept/<%= freq._id %>?_method=PUT" method="post">
                   <button class="btn btn-default btn-outline-success"  type="submit" name="button">Accept</button>
                 </form>
 
@@ -34,6 +34,22 @@
           <h4>Network Notifications</h4>
         </div>
         <div class="row" style="margin:15px">
+          <div class="list-group" style="width: 50%;margin-top:10px;display:table;margin-left:auto;margin-right:auto">
+            <% if(user.notifications.length == 0){%>
+              <p style="text-align:center">You have no new notifications</p>
+              <%}%>
+            <% user.notifications.reverse().forEach(function(note){ %>
+              <div style="margin:10px"class="list-group-item list-group-item-action">
+
+                  <form style="float:right" class="" action="/notifications/delete/<%= note._id %>?_method=DELETE" method="post">
+                    <button class="btn btn-default btn-outline-danger"type="submit" name="button">X</button>
+                  </form>
+
+                <p><%= note.text %></p>
+
+              </div>
+            <% }); %>
+          </div>
         </div>
 
     </div>

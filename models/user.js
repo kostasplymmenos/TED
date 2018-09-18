@@ -29,6 +29,9 @@ var UserSchema = new mongoose.Schema({
     chats :[{
       //_id = id tou chat sto Chat model
       userId : {type : Schema.Types.ObjectId, ref: "User"}
+    }],
+    notifications: [{
+      text: {type: String}  //describes the notification
     }]
 });
 UserSchema.plugin(passportLocalMongoose,{usernameField:"email"});
