@@ -2,7 +2,7 @@
 
 
 <div class="" style="margin-top: 30px;margin-left:10%;margin-right:10%">
-  <div class="" style="width:25%;float: left;background-color:#f7f7f7;border-radius: 6px;box-shadow: 2px 1px 1px 1px #505050;border: 1px solid #808080">
+  <div class="" style="width:25%;float: left;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border: 1px solid #808080">
     <div class="list-group-item" style="text-align:center">
       <p>Your Chats</p>
     </div>
@@ -24,33 +24,38 @@
 
 
 
-  <div class="" style="width:60%;margin-left: 2%;float:left;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
-    <div class="list-group-item" style="text-align:center">
-      <h5>Discussion with <%=chatUser.firstname%></h5>
-    </div>
-    <div id="reloadContent" class="list-group" style="margin:10px">
-      <% chat.messages.forEach(function(message){ %>
-        <% if(message.sender.toString() == user._id.toString() ){ %>
+  <div class="" style="width:60%;margin-left: 2%;float:left;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border: 1px solid #808080">
+    <%if(user.chats.length == 0){ %>
+      <p>You Have no chats</p>
+    <% }else{%>
+      <div class="list-group-item" style="text-align:center">
+        <h5>Discussion with <%=chatUser.firstname%></h5>
+      </div>
+      <div id="reloadContent" class="list-group" style="margin:10px">
+        <% chat.messages.forEach(function(message){ %>
+          <% if(message.sender.toString() == user._id.toString() ){ %>
 
-          <div class="list-group-item" style="line-height:1;margin-left:auto;max-width: 50%;overflow-wrap: break-word">
-            <p style="text-align:center"><%= message.date.toLocaleString() %></p>
-            <p style="overflow-wrap: break-word"><%= message.content%></p>
-          </div>
-        <% }else{ %>
-          <div class="list-group-item" style="line-height:1;margin-right:auto; max-width: 50%;overflow-wrap: break-word">
-            <p style="text-align:center"><%= message.date.toLocaleString() %></p>
-            <p style="overflow-wrap: break-word"><%= message.content%></p>
-          </div>
-        <% }%>
-      <% }); %>
-    </div>
-    <div class="" style="margin:30px">
-        <form class="form-inline" style="" action="/discussions/<%=user._id%>/send/<%=chatUser._id%>?_method=PUT" method="post">
-          <textarea id="txtarea" style="resize:none;width:80%" name="message" placeholder="Send a message to <%=chatUser.firstname%>"></textarea>
-          <input class="btn btn-default m-2 btn-outline-success" type="submit" value="Send">
-        </form>
-    </div>
+            <div class="list-group-item" style="line-height:1;margin-left:auto;max-width: 50%;overflow-wrap: break-word">
+              <p style="text-align:center"><%= message.date.toLocaleString() %></p>
+              <p style="overflow-wrap: break-word"><%= message.content%></p>
+            </div>
+          <% }else{ %>
+            <div class="list-group-item" style="line-height:1;margin-right:auto; max-width: 50%;overflow-wrap: break-word">
+              <p style="text-align:center"><%= message.date.toLocaleString() %></p>
+              <p style="overflow-wrap: break-word"><%= message.content%></p>
+            </div>
+          <% }%>
+        <% }); %>
+      </div>
+      <div class="" style="margin:30px">
+          <form class="form-inline" style="" action="/discussions/<%=user._id%>/send/<%=chatUser._id%>?_method=PUT" method="post">
+            <textarea id="txtarea" style="resize:none;width:80%" name="message" placeholder="Send a message to <%=chatUser.firstname%>"></textarea>
+            <input class="btn btn-default m-2 btn-outline-success" type="submit" value="Send">
+          </form>
+      </div>
+      <%}%>
   </div>
+
 </div>
 
   <script type="text/javascript">

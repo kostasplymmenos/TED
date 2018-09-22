@@ -1,7 +1,7 @@
 <% include partials/header.ejs %>
 
 <div class="" style="display: table;margin-top: 30px;margin-left:auto;margin-right:auto">
-  <div class="" style="width:25%;float: left;background-color:#f7f7f7;border-radius: 6px;box-shadow: 2px 1px 1px 1px #505050;border: 1px solid #808080">
+  <div class="" style="width:25%;float: left;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border: 1px solid #808080">
     <div class="list-group-item" style="text-align:center">
 
     </div>
@@ -40,22 +40,58 @@
     </div>
     <%}%>
 
+    <div class="container" style="text-align: center;margin:10px auto" >
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+        View All Connections
+      </button>
+    </div>
 
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Your Connections</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <%user.friends.forEach(function(friend){%>
+              <a href="/profile/<%=friend._id%>">
+                <span class="pull-left ">
+                     <img src="<%=friend.image%>" width="32" height="32" class=" img-rounded" />
+                </span>
+                <%= friend.firstname %> <%= friend.lastname %>
+              </a>
+              <hr>
+            <%});%>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
 
 
   </div>
 
 
-  <div class="" style="width:70%;margin-left: 2%;float:left;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+  <div class="" style="width:70%;margin-left: 2%;float:left;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border: 1px solid #808080">
     <div class="list-group-item" style="text-align:center">
       <h5>Welcome Back, <%= user.firstname %> <%= user.lastname %></h5>
     </div>
     <div style="" class="container">
         <form ref="uploadForm2" id="uploadForm2" encType="multipart/form-data" class="form-group" style="margin:20px" action="/home" method="post">
-          <textarea id="txtarea" style="resize:none;margin:0 auto" name="postarea"rows="3" cols="100" placeholder="What are you thinking?"></textarea>
+          <textarea class="form-control"id="txtarea" style="resize:none;margin:0 auto" name="postarea"rows="3" cols="100" placeholder="What are you thinking?"></textarea>
           <label for="mediaLabel">Upload an Image or Video</label>
           <input id="mediaLabel" type="file" name="p_media"> <br>
-          <input type="submit" value="Post">
+          <input class="btn btn-default btn-outline-primary"type="submit" value="Post">
         </form>
     </div>
 
@@ -86,13 +122,11 @@
             <%}%>
           <%}%>
           <hr>
+
+          <p>Likes: <%=post.likes.length%></p>
           <form class="" action="/home/like/<%=post._id%>?_method=PUT" method="post">
             <button class="btn btn-default btn-outline-success"type="submit" name="button">Like</button>
           </form>
-
-
-
-          <p>Likes: <%=post.likes.length%></p>
 
           <div class="commentSection">
             <div class="list-group">

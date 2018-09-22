@@ -10,7 +10,7 @@ var passport              = require('passport');
 
 router.use(bodyParser.urlencoded({extended: true}));
 
-router.get("/settings/:id",middleware.isLoggedIn,function(req,res){
+router.get("/settings",middleware.isLoggedIn,function(req,res){
   res.render("settings.ejs",{user: req.session.Auth});
 });
 

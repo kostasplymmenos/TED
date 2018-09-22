@@ -1,6 +1,6 @@
 <% include partials/header.ejs %>
 
-<div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+<div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border: 1px solid #808080">
   <div class="list-group-item" style="text-align:center">
     <h4>Personal Information</h4>
   </div>
@@ -12,30 +12,73 @@
       <p>Birth Date: <%= showUser.birthdate %></p>
       <p>Telephone Number: <%= showUser.telephone %></p>
 
-      <% if(showUser._id.toString() != user._id.toString()) { %>
+      <% if(showUser._id.toString() != user._id.toString() && showPrivate) { %>
         <a href="/discussions/<%= user._id %>/chat/<%= showUser._id %>">
           <button class="btn btn-default btn-outline-primary" >Chat with <%= showUser.firstname %></button>
         </a>
+      <% } else if(!showUser.friendRequestsPending.find(friend => user._id == friend._id)){ %>
+        <form action="/network/new/<%= showUser._id %>" method="post">
+          <button class="btn btn-default btn-outline-primary" >Add to Network</button>
+        </form>
+        <%}%>
+
+      <!-- Modal Trigger -->
+      <% if(showPrivate) { %>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+          View All Connections
+        </button>
       <% } %>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle"><%=showUser.firstname%> Connections</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <%showUser.friends.forEach(function(friend){%>
+                <a href="/profile/<%=friend._id%>">
+                  <span class="pull-left ">
+                       <img src="<%=friend.image%>" width="32" height="32" class=" img-rounded" />
+                  </span>
+                  <%= friend.firstname %> <%= friend.lastname %>
+                </a>
+                <hr>
+              <%});%>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal End -->
 
     </div>
   </div>
 </div>
 
-<div class="" style="margin-top: 10px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+<div class="" style="margin-top: 10px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border: 1px solid #808080">
   <div class="list-group-item" style="text-align:center">
     <h4>Professional Information</h4>
   </div>
-  <div style="margin:20px">
+  <div class="list-group" style="margin:20px;text-align:center">
 
     <% if((showUser.bio.text && !showUser.bio.isPrivate) || showPrivate) { %>
-      <div class="list-group-item">
+      <div class=" list-group-item">
           <p>Bio: <%=showUser.bio.text%></p>
       </div>
     <% } %>
 
     <% if((showUser.workPosition.text && !showUser.workPosition.isPrivate) || showPrivate) { %>
-      <div class="list-group-item">
+      <div style="margin:5px"class="list-group-item">
           <p>Work Position: <%=showUser.workPosition.text%></p>
       </div>
     <% } %>

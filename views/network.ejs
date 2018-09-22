@@ -1,45 +1,129 @@
 <% include partials/header.ejs %>
 
 
-    <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+    <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border: 1px solid #808080">
       <div class="list-group-item" style="text-align:center">
-        <h4>Connected Users</h4>
+        <h4>Recent Connections</h4>
       </div>
 
 
         <div class="row" style="margin:15px">
-          <% friends.forEach(function(fr){ %>
-            <div class="col-sm-4" style="margin-bottom:10px">
-                <div class="card" style="width: 18rem;height:25rem">
-                  <a href="/profile/<%= fr._id %>" style="text-align:center">
-                    <img class="" src="<%= fr.image %>" width="200"height="200"  alt="Card image cap">
+
+          <%for(var i=1; i<friends.length+1 && i<9; i++){ %>
+            <div class="col-sm-3" style="margin-bottom:10px">
+                <div class="card" style="width: 16rem;height:auto;display:inline-block;margin:0px auto;text-align:center">
+                  <a href="/profile/<%= friends[friends.length-i]._id %>" style="text-align:center">
+                    <img class="" src="<%= friends[friends.length-i].image %>" width="200"height="200"  alt="Card image cap">
                     <div class="card-body">
-                      <h5 class="card-title"><%= fr.firstname %> <%= fr.lastname %></h5>
+                      <h5 class="card-title"><%= friends[friends.length-i].firstname %> <%= friends[friends.length-i].lastname %></h5>
                   </a>
-                  <p class="card-text">Description</p>
-                  <p class="card-text">Work Experience</p>
+                    <p class="card-text"><%= friends[friends.length-i].bio.text %></p>
+                    <p class="card-text"><%=friends[friends.length-i].workPosition.text%></p>
+                    <p class="card-text"><%=friends[friends.length-i].company.text%></p>
                 </div>
-                </div>
+              </div>
             </div>
-          <% }); %>
+          <% } %>
         </div>
-      </div>
-    </div>
+        <!-- Show all connections -->
+        <hr>
+        <!-- Button trigger modal -->
+        <div class="m-2" style="text-align:center">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+            View All Connections
+          </button>
+        </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Your Connections</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
 
-      <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+                <%friends.forEach(function(friend){%>
+                  <a href="/profile/<%=friend._id%>">
+                    <span class="pull-left ">
+                         <img src="<%=friend.image%>" width="32" height="32" class=" img-rounded" />
+                    </span>
+                    <%= friend.firstname %> <%= friend.lastname %>
+                  </a>
+                  <hr>
+                <%});%>
 
-          <div class="list-group-item" style="text-align:center">
-              <h4>Recommended Users</h4><br>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-          <form class="" action="#" method="get">
-            <input style="width:50%" type="text" name="" value="" placeholder="Search by name, company, education etc.">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search users -->
+        <div class="list-group-item" style="text-align:center;margin-top:10px">
+          <form class="" action="/network" method="get">
+            <input style="width:50%" type="text" name="query" value="" placeholder="Search by name, company, education etc.">
             <button class="btn btn-default btn-outline-primary"type="submit" name="button">Search</button>
           </form>
-</div>
+        </div>
+
+        <div class="list-group" style="margin:10px">
+          <% searchResults.forEach(function(result){ %>
+            <div class="list-group-item" style="">
+              <a href="/profile/<%=result._id%>">
+                <span class="pull-left ">
+                     <img src="<%=result.image%>" width="32" height="32" class=" img-rounded" />
+                </span>
+                <%= result.firstname %> <%= result.lastname %>
+              </a>
+
+              <form style="float:right"action="/network/new/<%=result._id%>" method="post">
+                <button id="Add" class="btn btn-default btn-outline-primary" type="submit" name="button">Add to Network</button>
+              </form>
+            </div>
+          <%})%>
+        </div>
+  </div>
 
 
-          <div class="row" style="margin:15px">
+      <!-- <div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+
+          <div class="list-group-item" style="text-align:center">
+            <h4>Recommended Users</h4>
+          </div>
+          <div class="list-group-item" style="text-align:center;margin-top:10px">
+            <form class="" action="/network" method="get">
+              <input style="width:50%" type="text" name="query" value="" placeholder="Search by name, company, education etc.">
+              <button class="btn btn-default btn-outline-primary"type="submit" name="button">Search</button>
+            </form>
+          </div>
+
+          <div class="list-group" style="margin:10px">
+            <% searchResults.forEach(function(result){ %>
+              <div class="list-group-item" style="">
+                <a href="/profile/<%=result._id%>">
+                  <span class="pull-left ">
+                       <img src="<%=result.image%>" width="32" height="32" class=" img-rounded" />
+                  </span>
+                  <%= result.firstname %> <%= result.lastname %>
+                </a>
+
+                <form style="float:right"action="/network/new/<%=result._id%>" method="post">
+                  <button id="Add" class="btn btn-default btn-outline-primary" type="submit" name="button">Add to Network</button>
+                </form>
+              </div>
+            <%})%>
+          </div> -->
+
+
+
+          <!-- <div class="row" style="margin:15px">
             <% networkUsers.forEach(function(nuser){ %>
               <div class="col-sm-4" style="margin-bottom:10px">
                   <div class="card" style="width: 18rem;height:25rem">
@@ -48,8 +132,16 @@
                       <div class="card-body">
                         <h5 class="card-title"><%= nuser.firstname %> <%= nuser.lastname %></h5>
                     </a>
-                    <p class="card-text">Description</p>
-                    <p class="card-text">Work Experience</p>
+                    <% if(nuser.bio.text && !nuser.bio.isPrivate) { %>
+                      <p class="card-text">nuser.bio.text<</p>
+                    <% } %>
+                    <% if(nuser.workPosition.text && !nuser.workPosition.isPrivate) { %>
+                      <p class="card-text">nuser.workPosition.text<</p>
+                    <% } %>
+                    <% if(nuser.company.text && !nuser.company.isPrivate) { %>
+                      <p class="card-text">nuser.company.text<</p>
+                    <% } %>
+
                     <form action="/network/new/<%=nuser._id%>" method="post">
                       <button id="Add" class="btn btn-default btn-outline-primary" type="submit" name="button">Add to Network</button>
                     </form>
@@ -57,9 +149,9 @@
                   </div>
               </div>
             <% }); %>
-          </div>
-        </div>
-      </div>
+          </div> -->
+        <!-- </div>
+      </div> -->
 
 
 

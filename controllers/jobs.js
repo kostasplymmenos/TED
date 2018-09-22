@@ -11,8 +11,17 @@ router.use(bodyParser.urlencoded({extended: true}));
 
 //main page for user's network
 router.get("/jobs",middleware.isLoggedIn,function(req,res){
+  var showJobs = [];
   Job.find({},function (err,jobsFound) {
-    res.render("jobs.ejs",{user: req.session.Auth, jobs: jobsFound, message : ""});
+    //sort jobs according to auth's skills (most relevant appear first)
+    jobsFound.forEach(function(job){
+      req.session.Auth.skills.skillsArray.forEach(function(userskill){
+        if(job.skillsRequired.includes(userskill)){
+          showJobs.push(job);
+        }
+      });
+    });
+    res.render("jobs.ejs",{user: req.session.Auth, jobs: showJobs, message : ""});
   })
 });
 

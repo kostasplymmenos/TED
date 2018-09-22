@@ -8,18 +8,19 @@ var middleware = require("./../helpers/auth_middleware.js");
 var router = express.Router();
 router.use(bodyParser.urlencoded({extended: true}));
 
-router.get("/discussions/:id",middleware.isLoggedIn,middleware.userAccess,function(req,res){
+router.get("/discussions",middleware.isLoggedIn,function(req,res){
   //find and show the last chats
   //if no chats show no Chats
   if(req.session.Auth.chats.length != 0)
     return res.redirect("/discussions/" + req.session.Auth._id + "/chat/" + req.session.Auth.chats.reverse()[0].userId);
   else {
-    return res.send("No chats");
+    var foundChat = new Chat({}); //create empty chat to pass to discussions.ejs
+    return res.render("discussions.ejs",{user : req.session.Auth, chat:foundChat, chatUser: []});
   }
 });
 
 //when user clicks to chat with user id2
-router.get("/discussions/:id/chat/:id2",middleware.isLoggedIn,middleware.userAccess,function(req,res){
+router.get("/discussions/:id/chat/:id2",middleware.isLoggedIn,function(req,res){
   //whole user (with id2) needs to be passed
   //find user with id2
   User.findOne({_id: req.params.id2},function (err,userFound){
@@ -49,7 +50,7 @@ router.get("/discussions/:id/chat/:id2",middleware.isLoggedIn,middleware.userAcc
   });
 });
 
-router.put("/discussions/:id/send/:id2",middleware.isLoggedIn,middleware.userAccess,function (req,res) {
+router.put("/discussions/:id/send/:id2",middleware.isLoggedIn,function (req,res) {
   // find if the two users have a chat already in order to make new or not
   User.findOne({$and: [
      { _id : req.session.Auth._id},

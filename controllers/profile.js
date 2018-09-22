@@ -32,7 +32,15 @@ router.get("/profile/:id",middleware.isLoggedIn,function(req,res){
         return res.render("profile.ejs",{user: req.session.Auth, showUser: foundUser, showPrivate: true});
 
       //check if the user requested is friends with the user that made the request(Auth user)
-      var result = foundUser.friends.includes(req.session.Auth._id);
+      //var result = foundUser.friends.indexOf(req.session.Auth._id.toObjectId());
+      var result = foundUser.friends.find(friend => friend._id == req.session.Auth._id);
+      //console.log("rsult: " +result);
+      // console.log(foundUser.friends);
+      // console.log(typeof foundUser.friends);
+      // console.log(typeof foundUser.friends[0]);
+      // console.log(req.session.Auth._id);
+      // console.log(typeof mongoose.Types.ObjectId(req.session.Auth._id));
+      // console.log();
       if(!result) //if users are not friends, show public profile
         return res.render("profile.ejs",{user: req.session.Auth, showUser: foundUser, showPrivate: false});
       else{ //if users ARE friends, show private profile
@@ -116,7 +124,7 @@ router.put("/profile/update/:field",middleware.isLoggedIn,function(req,res){
 
     console.log(req.body);
     User.findOneAndUpdate({_id: req.session.Auth._id},
-      {$push: {skills: req.body.selectedSkill}},
+      {$push: {"skills.skillsArray": req.body.selectedSkill}},
       {new: true},
       function(err,updatedUser){
         if(err) return res.send(err);

@@ -1,6 +1,6 @@
 <% include partials/header.ejs %>
 
-<div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+<div class="" style="margin-top: 30px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border: 1px solid #808080">
   <div class="list-group-item" style="text-align:center">
     <h4>Personal Information</h4>
   </div>
@@ -15,13 +15,13 @@
   </div>
 </div>
 
-<div class="" style="margin-top: 10px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border-radius: 6px;border: 1px solid #808080">
+<div class="" style="margin-top: 10px;margin-left:auto;margin-right:auto;width:60%;background-color:#f7f7f7;box-shadow: 2px 1px 1px 1px #505050;border: 1px solid #808080">
   <div class="list-group-item" style="text-align:center">
     <h4>Professional Information</h4>
   </div>
-  <div style="margin:10px">
+  <div class="list-group text-center"style="margin:10px">
 
-    <div class="list-group-item">
+    <div class="m-2 list-group-item">
       <% if(showUser.bio.text) { %>
         <div class="bioInitial">
           <p><%=showUser.bio.text%></p>
@@ -51,7 +51,7 @@
     </div>
 
 
-    <div class="list-group-item">
+    <div class="m-2 list-group-item">
       <% if(showUser.workPosition.text) { %>
         <div class="workInitial">
           <p><%=showUser.workPosition.text%></p>
@@ -82,7 +82,7 @@
 
 
 
-    <div class="list-group-item">
+    <div class="m-2 list-group-item">
       <% if(showUser.education.text) { %>
         <div class="educationInitial">
           <p><%=showUser.education.text%></p>
@@ -111,7 +111,7 @@
       <% } %>
     </div>
 
-    <div class="list-group-item">
+    <div class="m-2 list-group-item">
       <% if(showUser.company.text) { %>
         <div class="companyInitial">
           <p><%=showUser.company.text%></p>
@@ -139,13 +139,13 @@
         </form>
       <% } %>
     </div>
-    <div class="list-group-item">
-      <% showUser.skills.skillsArray.forEach(function(skill){ %>
+    <div class="list-group-item m-auto">
+      <% user.skills.skillsArray.forEach(function(skill){ %>
         <p><%=skill%></p>
       <% });%>
 
       <form class="form-inline" action="/profile/update/skills?_method=PUT" method="post">
-          <% var skillsArr = ["Software Engineering","Computer Science","Data Science","Management","Pharmacy","Chemistry"]; %>
+          <% var skillsArr = ["Software Engineering","Computer Science","Data Science","Management","Pharmacy","Chemistry","Machine Learning","Biology","Operational Research","Business","Fine Arts","Trading","Marketing"]; %>
           <input name="selectedSkill" list="skills">
           <datalist id="skills">
             <% skillsArr.forEach(function(skill){ %>

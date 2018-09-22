@@ -22,11 +22,33 @@ router.get("/network",middleware.isLoggedIn,function(req,res){
       User.findOne({ _id: req.session.Auth._id}).populate("friends").exec(
         function(err,frs) {
           if(err) return res.send(err);
-          res.render("network.ejs",{user: req.session.Auth,friends: frs.friends ,networkUsers: usersfinal});
+
+          if(req.query.query){
+            User.find({$or: [
+                {lastname:{$regex : req.query.query,$options : 'i'}},
+                {firstname:{$regex : req.query.query,$options : 'i'}},
+                {company:{$regex : req.query.query,$options : 'i'}},
+            ]},
+            function(err,foundUsers){
+              //res.render("network.ejs",{user: req.session.Auth,friends: frs.friends ,networkUsers: usersfinal,searchResults: []});
+
+              console.log(foundUsers);
+              return res.render("network.ejs",{user: req.session.Auth,friends: frs.friends ,networkUsers: usersfinal,searchResults: foundUsers});
+            });
+          }
+          else
+            return res.render("network.ejs",{user: req.session.Auth,friends: frs.friends ,networkUsers: usersfinal,searchResults: []});
         }
       );
   });
 });
+
+// router.get("/network/search",middleware.isLoggedIn,function(req,res){
+//   return res.send(req.query.query);
+//   console.log("from search controller:\n" + req.body.query);
+//   req.session.searchQuery = req.body.query;
+//   res.redirect("/network");
+// });
 
 //Send friend request from id to id2
 router.post("/network/new/:id2",middleware.isLoggedIn,function(req,res){

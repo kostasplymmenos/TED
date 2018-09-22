@@ -5,32 +5,40 @@ var User       = require('./../models/user.js');
 var Post       = require('./../models/post.js');
 var Comment    = require('./../models/comment.js');
 var middleware = require("./../helpers/auth_middleware.js");
-
-
+var knn = require("./../helpers/knn_recommendation.js")
 
 var router = express.Router();
 router.use(bodyParser.urlencoded({extended: true}));
 
 //user's home page with his news feed
 router.get("/home",middleware.isLoggedIn,function(req,res){
-  //find all posts with author the auth user or his friends then populate them
-  Post.find({$or: [
-    { author : req.session.Auth._id}, //auth's posts
-    { author : { $in : req.session.Auth.friends}} //auth's friends' posts
-  ]})
-  .populate("author comments")
-  .populate({
-    path: 'comments',
-    populate: {
-      path: 'user',
-      model: 'User'
-    }
-  })
-  .exec(function(err,postsPopulated){
+
+  knn.kNearestNeighboors(3,req.session.Auth);
+
+  User.findOne({_id: req.session.Auth._id},function(err,user){
     if(err) return res.send(err);
-    res.render("home.ejs",{user: req.session.Auth, posts: postsPopulated});
+    user.populate("friends",function (err,populatedUser) {
+      //find all posts with author the auth user or his friends then populate them
+      Post.find({$or: [
+        { author : req.session.Auth._id}, //auth's posts
+        { author : { $in : req.session.Auth.friends}} //auth's friends' posts
+      ]})
+      .populate("author comments")
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'user',
+          model: 'User'
+        }
+      })
+      .exec(function(err,postsPopulated){
+        if(err) return res.send(err);
+        res.render("home.ejs",{user: populatedUser, posts: postsPopulated});
+      });
+    });
+    });
   });
-});
+
 
 // .populate({
 //      path: 'pages',
